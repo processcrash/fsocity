@@ -16,12 +16,10 @@
         <skipTests>true</skipTests>
         <docker.host>http://192.168.3.101:2375</docker.host>
         <docker.maven.plugin.version>1.2.2</docker.maven.plugin.version>
-        <spring-boot-dependencies.version>2.6.2</spring-boot-dependencies.version>
+        <spring-boot-dependencies.version>2.5.8</spring-boot-dependencies.version>
         <druid.version>1.1.22</druid.version>
         <hutool.version>4.5.7</hutool.version>
-        <swagger2.version>2.9.2</swagger2.version>
-        <swagger-models.version>1.6.0</swagger-models.version>
-        <swagger-annotations.version>1.6.0</swagger-annotations.version>
+        <springfox-boot-starter.version>3.0.0</springfox-boot-starter.version>
         <mysql-connector.version>8.0.16</mysql-connector.version>
         <jjwt.version>0.9.0</jjwt.version>
         <mybatis-plus.version>3.3.2</mybatis-plus.version>
@@ -69,27 +67,11 @@
             <artifactId>mysql-connector-java</artifactId>
             <version>${mysql-connector.version}</version>
         </dependency>
-        <!--Swagger-->
+        <!-- Swagger文档 -->
         <dependency>
             <groupId>io.springfox</groupId>
-            <artifactId>springfox-swagger2</artifactId>
-            <version>${swagger2.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>io.springfox</groupId>
-            <artifactId>springfox-swagger-ui</artifactId>
-            <version>${swagger2.version}</version>
-        </dependency>
-        <!--解决Swagger 2.9.2版本NumberFormatException-->
-        <dependency>
-            <groupId>io.swagger</groupId>
-            <artifactId>swagger-models</artifactId>
-            <version>${swagger-models.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>io.swagger</groupId>
-            <artifactId>swagger-annotations</artifactId>
-            <version>${swagger-annotations.version}</version>
+            <artifactId>springfox-boot-starter</artifactId>
+            <version>${springfox-boot-starter.version}</version>
         </dependency>
         <!--redis依赖配置-->
         <dependency>

@@ -4,6 +4,7 @@ import com.fsocity.common.config.BaseSwaggerConfig;
 import com.fsocity.common.domain.SwaggerProperties;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import springfox.documentation.oas.annotations.EnableOpenApi;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 /**
@@ -11,7 +12,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
  * Created by macro on 2018/4/26.
  */
 @Configuration
-@EnableSwagger2
+@EnableOpenApi
 @EnableWebMvc
 public class SwaggerConfig extends BaseSwaggerConfig {
 

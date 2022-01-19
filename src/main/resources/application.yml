@@ -6,9 +6,6 @@ spring:
     name: fsocity
   profiles:
     active: dev
-  main:
-    # 允许循环依赖
-    allow-circular-references: true
 
 mybatis-plus:
   mapper-locations: classpath:/mapper/**/*.xml
