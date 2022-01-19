@@ -16,11 +16,11 @@ public class SwaggerConfig extends BaseSwaggerConfig {
     @Override
     public SwaggerProperties swaggerProperties() {
         return SwaggerProperties.builder()
-                .apiBasePackage("com.macro.mall.tiny.modules")
-                .title("mall-tiny项目骨架")
-                .description("mall-tiny项目骨架相关接口文档")
-                .contactName("macro")
-                .version("1.0")
+                .apiBasePackage("com.fsocity.modules")
+                .title("Fsocity 脚手架")
+                .description("接口文档")
+                .contactName("Zail")
+                .version("1.0.0")
                 .enableSecurity(true)
                 .build();
     }

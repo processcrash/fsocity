@@ -39,13 +39,13 @@ mall-tiny项目可无缝对接`mall-admin-web`前端项目，秒变权限管理�
 
 - 化繁为简，仅保留了权限管理功能相关的9张表，方便自由定制；
 
-- 数据库源文件地址：https://github.com/macrozheng/mall-tiny/blob/master/sql/mall_tiny.sql
+- 数据库源文件地址：https://github.com/macrozheng/mall-tiny/blob/master/sql/fsocity.sql
 
 ## 使用流程
 
 ### 环境搭建
 
-简化依赖服务，只需安装最常用的MySql和Redis服务即可，服务安装具体参考[mall在Windows环境下的部署](https://mp.weixin.qq.com/s/Q9ybpfq8IEdbZmvlaMXJdg)，数据库中需要导入`mall_tiny.sql`脚本。
+简化依赖服务，只需安装最常用的MySql和Redis服务即可，服务安装具体参考[mall在Windows环境下的部署](https://mp.weixin.qq.com/s/Q9ybpfq8IEdbZmvlaMXJdg)，数据库中需要导入`fsocity.sql`脚本。
 
 ### 开发规约
 
