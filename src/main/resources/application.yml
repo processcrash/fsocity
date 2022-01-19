@@ -32,7 +32,8 @@ redis:
 
 secure:
   ignored:
-    urls: #安全路径白名单
+    # 安全路径白名单
+    urls:
       - /swagger-ui.html
       - /swagger-resources/**
       - /swagger/**

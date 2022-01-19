@@ -3,6 +3,7 @@ package com.fsocity.modules.ums.mapper;
 import com.fsocity.modules.ums.model.UmsAdmin;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
@@ -14,6 +15,7 @@ import java.util.List;
  * @author macro
  * @since 2020-08-21
  */
+@Component
 public interface UmsAdminMapper extends BaseMapper<UmsAdmin> {
 
     /**
