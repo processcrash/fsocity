@@ -13,8 +13,5 @@ spring:
     cache: false # 取消页面cache
 
 logging:
-  file:
-    path: ./logs
-  level:
-    root: info
-    com.fsocity: debug
+  # 日志配置文件
+  config: classpath:logback-spring-dev.xml

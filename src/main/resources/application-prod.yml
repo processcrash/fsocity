@@ -11,8 +11,4 @@ spring:
     timeout: 3000ms # 连接超时时间（毫秒）
 
 logging:
-  file:
-    path: /var/logs
-  level:
-    root: info
-    com.fsocity: info
+  config: classpath:logback-spring.xml
