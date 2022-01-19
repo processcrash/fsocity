@@ -47,6 +47,11 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
+        <!-- Thymeleaf 模版 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-thymeleaf</artifactId>
+        </dependency>
         <!--SpringBoot校验框架-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
