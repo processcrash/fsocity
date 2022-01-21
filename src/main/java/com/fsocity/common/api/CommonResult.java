@@ -4,6 +4,7 @@ package com.fsocity.common.api;
  * 通用返回对象
  * Created by macro on 2019/4/19.
  */
+@Deprecated
 public class CommonResult<T> {
     private long code;
     private String message;
