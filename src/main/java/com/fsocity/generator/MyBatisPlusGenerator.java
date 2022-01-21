@@ -23,6 +23,8 @@ import java.util.Scanner;
 public class MyBatisPlusGenerator {
     // 作者
     private static final String AUTHOR = "Zail";
+    // 模版文件目录
+    private static final String TEMPLATES_DIR = "/templates/vm";
     private static final String url = "jdbc:mysql://localhost:3306/fsocity?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai";
     private static final String driverName = "com.mysql.cj.jdbc.Driver";
     private static final String username = "root";
@@ -119,6 +121,11 @@ public class MyBatisPlusGenerator {
     private static TemplateConfig initTemplateConfig() {
         TemplateConfig templateConfig = new TemplateConfig();
         //可以对controller、service、entity模板进行配置
+        templateConfig.setController(TEMPLATES_DIR + "/controller.java.vm");
+        // templateConfig.setService(TEMPLATES_DIR + "/service.java.vm");
+        // templateConfig.setServiceImpl(TEMPLATES_DIR + "/serviceImpl.java.vm");
+        // templateConfig.setEntity(TEMPLATES_DIR + "/entity.java.vm");
+        // templateConfig.setMapper(TEMPLATES_DIR + "/mapper.java.vm");
         //mapper.xml模板需单独配置
         templateConfig.setXml(null);
         return templateConfig;
