@@ -1,7 +1,6 @@
 package com.fsocity.generator;
 
 import cn.hutool.core.util.StrUtil;
-import cn.hutool.setting.dialect.Props;
 import com.baomidou.mybatisplus.core.exceptions.MybatisPlusException;
 import com.baomidou.mybatisplus.core.toolkit.StringPool;
 import com.baomidou.mybatisplus.generator.AutoGenerator;
@@ -22,7 +21,14 @@ import java.util.Scanner;
  * Created by macro on 2020/8/20.
  */
 public class MyBatisPlusGenerator {
-
+    // 作者
+    private static final String AUTHOR = "Zail";
+    private static final String url = "jdbc:mysql://localhost:3306/fsocity?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai";
+    private static final String driverName = "com.mysql.cj.jdbc.Driver";
+    private static final String username = "root";
+    private static final String password = "root";
+    private static final String packageBase = "com.fsocity.modules";
+    
     public static void main(String[] args) {
         String projectPath = System.getProperty("user.dir");
         String moduleName = scanner("模块名");
@@ -38,7 +44,7 @@ public class MyBatisPlusGenerator {
         autoGenerator.setTemplateEngine(new VelocityTemplateEngine());
         autoGenerator.execute();
     }
-
+    
     /**
      * 读取控制台内容信息
      */
@@ -53,19 +59,29 @@ public class MyBatisPlusGenerator {
         }
         throw new MybatisPlusException("请输入正确的" + tip + "！");
     }
-
+    
     /**
      * 初始化全局配置
      */
     private static GlobalConfig initGlobalConfig(String projectPath) {
         GlobalConfig globalConfig = new GlobalConfig();
+        //生成文件输出存放路径 = 当前项目路径 + 想存放到项目中的路径
         globalConfig.setOutputDir(projectPath + "/src/main/java");
-        globalConfig.setAuthor("macro");
+        globalConfig.setAuthor(AUTHOR);
+        //生成完后是否打开输出目录
         globalConfig.setOpen(false);
-        globalConfig.setSwagger2(true);
-        globalConfig.setBaseResultMap(true);
+        //是否覆盖生成过的已有文件
         globalConfig.setFileOverride(true);
+        //开启 swagger2 模式,实体属性 Swagger2 注解,默认false
+        globalConfig.setSwagger2(true);
+        // XML文件返回对象定义ResultMap
+        globalConfig.setBaseResultMap(true);
+        // XML返回对象字段列表columList
+        globalConfig.setBaseColumnList(true);
+        // 是否在xml中添加二级缓存配置,默认false
+        globalConfig.setEnableCache(false);
         globalConfig.setDateType(DateType.ONLY_DATE);
+        //生成的文件名字定义，%s 会自动填充表实体属性
         globalConfig.setEntityName("%s");
         globalConfig.setMapperName("%sMapper");
         globalConfig.setXmlName("%sMapper");
@@ -74,32 +90,29 @@ public class MyBatisPlusGenerator {
         globalConfig.setControllerName("%sController");
         return globalConfig;
     }
-
+    
     /**
      * 初始化数据源配置
      */
     private static DataSourceConfig initDataSourceConfig() {
-        Props props = new Props("generator.properties");
         DataSourceConfig dataSourceConfig = new DataSourceConfig();
-        dataSourceConfig.setUrl(props.getStr("dataSource.url"));
-        dataSourceConfig.setDriverName(props.getStr("dataSource.driverName"));
-        dataSourceConfig.setUsername(props.getStr("dataSource.username"));
-        dataSourceConfig.setPassword(props.getStr("dataSource.password"));
+        dataSourceConfig.setUrl(url);
+        dataSourceConfig.setDriverName(driverName);
+        dataSourceConfig.setUsername(username);
+        dataSourceConfig.setPassword(password);
         return dataSourceConfig;
     }
-
+    
     /**
      * 初始化包配置
      */
     private static PackageConfig initPackageConfig(String moduleName) {
-        Props props = new Props("generator.properties");
         PackageConfig packageConfig = new PackageConfig();
         packageConfig.setModuleName(moduleName);
-        packageConfig.setParent(props.getStr("package.base"));
-        packageConfig.setEntity("model");
+        packageConfig.setParent(packageBase);
         return packageConfig;
     }
-
+    
     /**
      * 初始化模板配置
      */
@@ -110,7 +123,7 @@ public class MyBatisPlusGenerator {
         templateConfig.setXml(null);
         return templateConfig;
     }
-
+    
     /**
      * 初始化策略配置
      */
@@ -125,12 +138,13 @@ public class MyBatisPlusGenerator {
             String[] likeStr = tableNames[0].split("_");
             String likePrefix = likeStr[0] + "_";
             strategyConfig.setLikeTable(new LikeTable(likePrefix));
-        } else {
+        }
+        else {
             strategyConfig.setInclude(tableNames);
         }
         return strategyConfig;
     }
-
+    
     /**
      * 初始化自定义配置
      */
@@ -158,5 +172,5 @@ public class MyBatisPlusGenerator {
         injectionConfig.setFileOutConfigList(focList);
         return injectionConfig;
     }
-
+    
 }

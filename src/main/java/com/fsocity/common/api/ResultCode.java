@@ -1,13 +1,9 @@
 package com.fsocity.common.api;
 
-import lombok.Getter;
-
 /**
  * 枚举了一些常用API操作码
  * Created by macro on 2019/4/19.
  */
-@Deprecated
-@Getter
 public enum ResultCode implements IErrorCode {
     
     SUCCESS(200L, "操作成功"),
@@ -16,11 +12,21 @@ public enum ResultCode implements IErrorCode {
     UNAUTHORIZED(401L, "暂未登录或token已经过期"),
     FORBIDDEN(403L, "没有相关权限");
     
-    private final Long code;
-    private final String message;
+    private Long code;
+    private String message;
 
     ResultCode(Long code, String message) {
         this.code = code;
         this.message = message;
+    }
+
+    @Override
+    public long getCode() {
+        return code;
+    }
+
+    @Override
+    public String getMessage() {
+        return message;
     }
 }
