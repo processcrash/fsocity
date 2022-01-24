@@ -1,4 +1,4 @@
-package com.fsocity.domain;
+package com.fsocity.modules.ums;
 
 import com.fsocity.modules.ums.model.UmsAdmin;
 import com.fsocity.modules.ums.model.UmsResource;
