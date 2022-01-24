@@ -12,7 +12,6 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.annotation.web.configurers.ExpressionUrlAuthorizationConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.access.intercept.FilterSecurityInterceptor;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
@@ -22,11 +21,15 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
  * 对SpringSecurity的配置的扩展，支持自定义白名单资源路径和查询用户逻辑
  * Created by macro on 2019/11/5.
  */
-public class SecurityConfig extends WebSecurityConfigurerAdapter {
-
+public class MyWebSecurityConfigurer extends WebSecurityConfigurerAdapter {
+    
     @Autowired(required = false)
     private DynamicSecurityService dynamicSecurityService;
-
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+    @Autowired
+    private JwtAuthenticationTokenFilter jwtAuthenticationTokenFilter;
+    
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
         ExpressionUrlAuthorizationConfigurer<HttpSecurity>.ExpressionInterceptUrlRegistry registry = httpSecurity
@@ -56,72 +59,58 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authenticationEntryPoint(restAuthenticationEntryPoint())
                 // 自定义权限拦截器JWT过滤器
                 .and()
-                .addFilterBefore(jwtAuthenticationTokenFilter(), UsernamePasswordAuthenticationFilter.class);
+                .addFilterBefore(jwtAuthenticationTokenFilter, UsernamePasswordAuthenticationFilter.class);
         //有动态权限配置时添加动态权限校验过滤器
-        if(dynamicSecurityService!=null){
+        if (dynamicSecurityService != null) {
             registry.and().addFilterBefore(dynamicSecurityFilter(), FilterSecurityInterceptor.class);
         }
     }
-
+    
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userDetailsService())
-                .passwordEncoder(passwordEncoder());
+        auth
+                .userDetailsService(userDetailsService())
+                .passwordEncoder(passwordEncoder);
     }
-
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
-
-    @Bean
-    public JwtAuthenticationTokenFilter jwtAuthenticationTokenFilter() {
-        return new JwtAuthenticationTokenFilter();
-    }
-
+    
     @Bean
     @Override
     public AuthenticationManager authenticationManagerBean() throws Exception {
         return super.authenticationManagerBean();
     }
-
+    
     @Bean
     public RestfulAccessDeniedHandler restfulAccessDeniedHandler() {
         return new RestfulAccessDeniedHandler();
     }
-
+    
     @Bean
     public RestAuthenticationEntryPoint restAuthenticationEntryPoint() {
         return new RestAuthenticationEntryPoint();
     }
-
+    
     @Bean
     public IgnoreUrlsConfig ignoreUrlsConfig() {
         return new IgnoreUrlsConfig();
     }
-
-    @Bean
-    public JwtTokenUtil jwtTokenUtil() {
-        return new JwtTokenUtil();
-    }
-
+    
     @ConditionalOnBean(name = "dynamicSecurityService")
     @Bean
     public DynamicAccessDecisionManager dynamicAccessDecisionManager() {
         return new DynamicAccessDecisionManager();
     }
-
-
+    
+    
     @ConditionalOnBean(name = "dynamicSecurityService")
     @Bean
     public DynamicSecurityFilter dynamicSecurityFilter() {
         return new DynamicSecurityFilter();
     }
-
+    
     @ConditionalOnBean(name = "dynamicSecurityService")
     @Bean
     public DynamicSecurityMetadataSource dynamicSecurityMetadataSource() {
         return new DynamicSecurityMetadataSource();
     }
-
+    
 }

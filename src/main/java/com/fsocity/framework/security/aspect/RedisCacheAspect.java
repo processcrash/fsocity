@@ -21,7 +21,9 @@ import java.lang.reflect.Method;
 @Aspect
 @Component
 @Order(2)
+@Deprecated
 public class RedisCacheAspect {
+    
     private static Logger LOGGER = LoggerFactory.getLogger(RedisCacheAspect.class);
 
     @Pointcut("execution(public * com.fsocity.service.*CacheService.*(..))")

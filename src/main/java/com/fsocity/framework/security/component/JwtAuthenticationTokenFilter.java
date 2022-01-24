@@ -1,5 +1,6 @@
 package com.fsocity.framework.security.component;
 
+import com.fsocity.framework.security.properties.JWTProperties;
 import com.fsocity.framework.security.util.JwtTokenUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,22 +27,23 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
     
     private static final Logger LOGGER = LoggerFactory.getLogger(JwtAuthenticationTokenFilter.class);
     
-    @Autowired
-    private UserDetailsService userDetailsService;
-    @Autowired
+    private JWTProperties jwtProperties;
     private JwtTokenUtil jwtTokenUtil;
-    @Value("${jwt.tokenHeader}")
-    private String tokenHeader;
-    @Value("${jwt.tokenHead}")
-    private String tokenHead;
-
+    private UserDetailsService userDetailsService;
+    
+    public JwtAuthenticationTokenFilter(JWTProperties jwtProperties, JwtTokenUtil jwtTokenUtil, UserDetailsService userDetailsService) {
+        this.jwtProperties = jwtProperties;
+        this.jwtTokenUtil = jwtTokenUtil;
+        this.userDetailsService = userDetailsService;
+    }
+    
     @Override
     protected void doFilterInternal(HttpServletRequest request,
                                     HttpServletResponse response,
                                     FilterChain chain) throws ServletException, IOException {
-        String authHeader = request.getHeader(this.tokenHeader);
-        if (authHeader != null && authHeader.startsWith(this.tokenHead)) {
-            String authToken = authHeader.substring(this.tokenHead.length());// The part after "Bearer "
+        String authHeader = request.getHeader(jwtProperties.getHttpHeaderName());
+        if (authHeader != null && authHeader.startsWith(jwtProperties.getTokenHead())) {
+            String authToken = authHeader.substring(jwtProperties.getTokenHead().length()); // The part after "Bearer "
             String username = jwtTokenUtil.getUserNameFromToken(authToken);
             LOGGER.info("checking username:{}", username);
             if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
