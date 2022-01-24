@@ -6,8 +6,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.fsocity.common.exception.Asserts;
-import com.fsocity.domain.AdminUserDetails;
+import com.fsocity.modules.ums.AdminUserDetails;
 import com.fsocity.modules.ums.dto.UmsAdminParam;
 import com.fsocity.modules.ums.dto.UpdateAdminPasswordParam;
 import com.fsocity.modules.ums.model.*;
@@ -18,7 +17,7 @@ import com.fsocity.modules.ums.mapper.UmsResourceMapper;
 import com.fsocity.modules.ums.mapper.UmsRoleMapper;
 import com.fsocity.modules.ums.service.UmsAdminCacheService;
 import com.fsocity.modules.ums.service.UmsAdminRoleRelationService;
-import com.fsocity.security.util.JwtTokenUtil;
+import com.fsocity.framework.security.util.JwtTokenUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
@@ -103,10 +102,10 @@ public class UmsAdminServiceImpl extends ServiceImpl<UmsAdminMapper, UmsAdmin> i
         try {
             UserDetails userDetails = loadUserByUsername(username);
             if(!passwordEncoder.matches(password,userDetails.getPassword())){
-                Asserts.fail("密码不正确");
+                // Asserts.fail("密码不正确");
             }
             if(!userDetails.isEnabled()){
-                Asserts.fail("帐号已被禁用");
+                // Asserts.fail("帐号已被禁用");
             }
             UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
             SecurityContextHolder.getContext().setAuthentication(authentication);

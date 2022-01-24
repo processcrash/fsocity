@@ -1,8 +1,6 @@
 package ${package.Controller};
-
-import com.fsocity.common.api.JsonResult;
-import org.springframework.validation.BindingResult;
-#if(${restControllerStyle})
+    
+    #if(${restControllerStyle})
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 #else
@@ -14,7 +12,6 @@ import ${superControllerClassPackage};
 import org.springframework.beans.factory.annotation.Autowired;
 import ${package.Service}.${table.serviceName};
 import io.swagger.annotations.ApiOperation;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import ${package.Entity}.${table.entityName};
 
 /**

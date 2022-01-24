@@ -2,9 +2,9 @@ package com.fsocity.modules.ums.controller;
 
 import cn.hutool.core.collection.CollUtil;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.fsocity.common.api.CommonPage;
-import com.fsocity.common.api.JsonResult;
-import com.fsocity.common.api.ResponseStatusEnum;
+import com.fsocity.framework.web.CommonPage;
+import com.fsocity.framework.web.JsonResult;
+import com.fsocity.framework.web.ResponseStatusEnum;
 import com.fsocity.modules.ums.dto.UmsAdminLoginParam;
 import com.fsocity.modules.ums.dto.UmsAdminParam;
 import com.fsocity.modules.ums.dto.UpdateAdminPasswordParam;

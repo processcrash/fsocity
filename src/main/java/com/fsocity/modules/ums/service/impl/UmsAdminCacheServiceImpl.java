@@ -2,7 +2,7 @@ package com.fsocity.modules.ums.service.impl;
 
 import cn.hutool.core.collection.CollUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.fsocity.common.service.RedisService;
+import com.fsocity.framework.service.RedisService;
 import com.fsocity.modules.ums.model.UmsAdminRoleRelation;
 import com.fsocity.modules.ums.mapper.UmsAdminMapper;
 import com.fsocity.modules.ums.model.UmsAdmin;

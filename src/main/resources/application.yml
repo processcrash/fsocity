@@ -30,6 +30,15 @@ redis:
   expire:
     common: 86400 # 24小时
 
+fsocity:
+  swagger:
+    api-base-package: com.fsocity.modules
+    title: Fsocity 脚手架
+    description: 接口文档
+    contact-name: Zail
+    version: 1.0.0
+    enable-security: true
+
 secure:
   ignored:
     # 安全路径白名单
