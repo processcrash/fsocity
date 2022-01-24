@@ -30,8 +30,14 @@ public class WebSecurityProperties {
     private String[] unauthenticatedUrls = {};
     // 验证码配置
     private ValidationCodeProperties validationCode = new ValidationCodeProperties();
+    // 记住我
+    private String rememberMeName = "rememberMe";
     // 记住我时间配置(单位秒)
     private Integer rememberMeSeconds = 3600 * 2;
+    // CSRF配置
+    private CsrfProperties csrf = new CsrfProperties();
+    // CORS配置
+    private CorsProperties cors = new CorsProperties();
     // jwt 配置
     private JWTProperties jwt = new JWTProperties();
 }

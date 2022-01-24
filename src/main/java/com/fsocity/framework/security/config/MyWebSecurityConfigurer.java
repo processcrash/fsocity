@@ -1,116 +1,105 @@
 package com.fsocity.framework.security.config;
 
-import com.fsocity.framework.security.component.*;
-import com.fsocity.framework.security.util.JwtTokenUtil;
+import com.fsocity.framework.security.authentication.JwtAuthenticationTokenFilter;
+import com.fsocity.framework.security.authentication.WebAccessDeniedHandler;
+import com.fsocity.framework.security.authentication.WebAuthenticationFailureHandler;
+import com.fsocity.framework.security.authentication.WebAuthenticationSuccessHandler;
+import com.fsocity.framework.security.properties.WebSecurityProperties;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
-import org.springframework.context.annotation.Bean;
-import org.springframework.http.HttpMethod;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.config.annotation.web.configurers.ExpressionUrlAuthorizationConfigurer;
-import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.access.intercept.FilterSecurityInterceptor;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 
 
 /**
  * 对SpringSecurity的配置的扩展，支持自定义白名单资源路径和查询用户逻辑
  * Created by macro on 2019/11/5.
  */
+@Configuration
 public class MyWebSecurityConfigurer extends WebSecurityConfigurerAdapter {
     
-    @Autowired(required = false)
-    private DynamicSecurityService dynamicSecurityService;
     @Autowired
-    private PasswordEncoder passwordEncoder;
+    private WebSecurityProperties webSecurityProperties;
+    @Autowired
+    private WebAuthenticationSuccessHandler webAuthenticationSuccessHandler;
+    @Autowired
+    private WebAuthenticationFailureHandler webAuthenticationFailureHandler;
+    @Autowired
+    private WebAccessDeniedHandler webAccessDeniedHandler;
     @Autowired
     private JwtAuthenticationTokenFilter jwtAuthenticationTokenFilter;
+    @Autowired
+    private PersistentTokenRepository persistentTokenRepository;
+    @Autowired
+    private UserDetailsService userDetailsService;
     
     @Override
-    protected void configure(HttpSecurity httpSecurity) throws Exception {
-        ExpressionUrlAuthorizationConfigurer<HttpSecurity>.ExpressionInterceptUrlRegistry registry = httpSecurity
-                .authorizeRequests();
-        //不需要保护的资源路径允许访问
-        for (String url : ignoreUrlsConfig().getUrls()) {
-            registry.antMatchers(url).permitAll();
-        }
-        //允许跨域请求的OPTIONS请求
-        registry.antMatchers(HttpMethod.OPTIONS)
-                .permitAll();
-        // 任何请求需要身份认证
-        registry.and()
+    protected void configure(HttpSecurity http) throws Exception {
+    
+        http
+                // JWT 认证过滤器
+                .addFilterBefore(jwtAuthenticationTokenFilter, UsernamePasswordAuthenticationFilter.class)
+                // 增加验证码验证过滤器
+                // .addFilterBefore(validationCodeFilter, UsernamePasswordAuthenticationFilter.class)
+            
+                // 配置表单登录
+                .formLogin()
+                .loginPage(webSecurityProperties.getRequireAuthenticationUrl()) // 处理登录页面
+                .loginProcessingUrl(webSecurityProperties.getLoginProcessingUrl()) // 处理登录的 url
+            
+                .successHandler(webAuthenticationSuccessHandler) // 配置登录成功处理器
+                .failureHandler(webAuthenticationFailureHandler) // 配置登录失败处理器
+                .and()
+            
+                // 配置退出登录
+                .logout()
+                .logoutUrl(webSecurityProperties.getLogoutUrl())
+                .and()
+            
+                // 配置 记住我
+                .rememberMe()
+                .rememberMeParameter(webSecurityProperties.getRememberMeName())
+                .tokenRepository(persistentTokenRepository)
+                .tokenValiditySeconds(webSecurityProperties.getRememberMeSeconds())
+                .userDetailsService(userDetailsService)
+                .and()
+            
+                // 身份请求认证
                 .authorizeRequests()
-                .anyRequest()
+            
+                // 配置不需要身份认证的链接
+                .antMatchers(webSecurityProperties.getUnauthenticatedUrls())
+                .permitAll()
+            
+                // 配置需要身份认证的链接
+                .antMatchers(webSecurityProperties.getAuthenticatedUrls())
                 .authenticated()
-                // 关闭跨站请求防护及不使用session
                 .and()
-                .csrf()
+                
+                // 配置头
+                .headers()
+                .frameOptions()
                 .disable()
-                .sessionManagement()
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                // 自定义权限拒绝处理类
+            
                 .and()
-                .exceptionHandling()
-                .accessDeniedHandler(restfulAccessDeniedHandler())
-                .authenticationEntryPoint(restAuthenticationEntryPoint())
-                // 自定义权限拦截器JWT过滤器
-                .and()
-                .addFilterBefore(jwtAuthenticationTokenFilter, UsernamePasswordAuthenticationFilter.class);
-        //有动态权限配置时添加动态权限校验过滤器
-        if (dynamicSecurityService != null) {
-            registry.and().addFilterBefore(dynamicSecurityFilter(), FilterSecurityInterceptor.class);
+                .exceptionHandling() // 异常处理
+                .accessDeniedHandler(webAccessDeniedHandler) // 配置访问拒绝处理器
+                .accessDeniedPage(webSecurityProperties.getAccessDeniedUrl());
+        
+        if (!webSecurityProperties.getCsrf().getEnable()) {
+            http
+                    .csrf()
+                    .disable(); // 关闭csrf
         }
-    }
-    
-    @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth
-                .userDetailsService(userDetailsService())
-                .passwordEncoder(passwordEncoder);
-    }
-    
-    @Bean
-    @Override
-    public AuthenticationManager authenticationManagerBean() throws Exception {
-        return super.authenticationManagerBean();
-    }
-    
-    @Bean
-    public RestfulAccessDeniedHandler restfulAccessDeniedHandler() {
-        return new RestfulAccessDeniedHandler();
-    }
-    
-    @Bean
-    public RestAuthenticationEntryPoint restAuthenticationEntryPoint() {
-        return new RestAuthenticationEntryPoint();
-    }
-    
-    @Bean
-    public IgnoreUrlsConfig ignoreUrlsConfig() {
-        return new IgnoreUrlsConfig();
-    }
-    
-    @ConditionalOnBean(name = "dynamicSecurityService")
-    @Bean
-    public DynamicAccessDecisionManager dynamicAccessDecisionManager() {
-        return new DynamicAccessDecisionManager();
-    }
-    
-    
-    @ConditionalOnBean(name = "dynamicSecurityService")
-    @Bean
-    public DynamicSecurityFilter dynamicSecurityFilter() {
-        return new DynamicSecurityFilter();
-    }
-    
-    @ConditionalOnBean(name = "dynamicSecurityService")
-    @Bean
-    public DynamicSecurityMetadataSource dynamicSecurityMetadataSource() {
-        return new DynamicSecurityMetadataSource();
+        if (!webSecurityProperties.getCors().getEnable()) {
+            http
+                    .cors()
+                    .disable(); // 关闭cors
+        }
+        
     }
     
 }

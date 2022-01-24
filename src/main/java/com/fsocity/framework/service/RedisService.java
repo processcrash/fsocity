@@ -1,5 +1,7 @@
 package com.fsocity.framework.service;
 
+import org.springframework.stereotype.Service;
+
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -8,6 +10,7 @@ import java.util.Set;
  * redis操作Service
  * Created by macro on 2020/3/3.
  */
+@Service
 public interface RedisService {
 
     /**

@@ -1,18 +1,19 @@
 package com.fsocity.framework.security.config;
 
-import com.fsocity.framework.security.component.*;
+import com.fsocity.framework.security.authentication.JwtAuthenticationTokenFilter;
 import com.fsocity.framework.security.properties.WebSecurityProperties;
 import com.fsocity.framework.security.util.JwtTokenUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.DelegatingPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
+import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 
+import javax.sql.DataSource;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -27,6 +28,8 @@ public class WebSecurityBeanConfig {
     private WebSecurityProperties webSecurityProperties;
     @Autowired
     private UserDetailsService userDetailsService;
+    @Autowired
+    private DataSource dataSource;
     
     /**
      * 密码加密工具
@@ -43,6 +46,13 @@ public class WebSecurityBeanConfig {
     }
     
     @Bean
+    public PersistentTokenRepository persistentTokenRepository() {
+        JdbcTokenRepositoryImpl r = new JdbcTokenRepositoryImpl();
+        r.setDataSource(dataSource);
+        return r;
+    }
+    
+    @Bean
     public JwtTokenUtil jwtTokenUtil() {
         return new JwtTokenUtil(webSecurityProperties.getJwt());
     }
@@ -54,4 +64,5 @@ public class WebSecurityBeanConfig {
                 jwtTokenUtil(),
                 userDetailsService);
     }
+    
 }
