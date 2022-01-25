@@ -1,6 +1,6 @@
 package ${package.Controller};
-    
-    #if(${restControllerStyle})
+
+#if(${restControllerStyle})
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 #else
@@ -13,6 +13,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import ${package.Service}.${table.serviceName};
 import io.swagger.annotations.ApiOperation;
 import ${package.Entity}.${table.entityName};
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.fsocity.framework.web.JsonResult;
+import org.springframework.validation.BindingResult;
 
 /**
  * ${package.ModuleName}前端控制器
