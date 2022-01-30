@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
  * @date 2022/1/30
  */
 @Controller
-public class WWWIndexController {
+public class WwwIndexController {
     
     /**
      * 首页
