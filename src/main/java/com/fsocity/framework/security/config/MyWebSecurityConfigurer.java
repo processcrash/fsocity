@@ -90,14 +90,10 @@ public class MyWebSecurityConfigurer extends WebSecurityConfigurerAdapter {
                 .accessDeniedPage(webSecurityProperties.getAccessDeniedUrl());
         
         if (!webSecurityProperties.getCsrf().getEnable()) {
-            http
-                    .csrf()
-                    .disable(); // 关闭csrf
+            http.csrf().disable(); // 关闭csrf
         }
         if (!webSecurityProperties.getCors().getEnable()) {
-            http
-                    .cors()
-                    .disable(); // 关闭cors
+            http.cors().disable(); // 关闭cors
         }
         
     }
