@@ -8,5 +8,8 @@ import lombok.Data;
  */
 @Data
 public class CsrfProperties {
+    
+    // 是否开启
     private Boolean enable = true;
+    
 }
