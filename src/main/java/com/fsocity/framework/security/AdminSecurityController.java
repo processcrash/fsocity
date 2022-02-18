@@ -1,6 +1,10 @@
 package com.fsocity.framework.security;
 
 import com.fsocity.framework.security.properties.WebSecurityProperties;
+import com.fsocity.framework.security.validation.DefaultValidationCode;
+import com.fsocity.framework.security.validation.ImageValidationCode;
+import com.fsocity.framework.security.validation.ImageValidationCodeGenerator;
+import com.fsocity.framework.security.validation.ValidationCode;
 import com.fsocity.framework.web.JsonResult;
 import com.fsocity.framework.web.ResponseStatusEnum;
 import lombok.extern.slf4j.Slf4j;
@@ -18,8 +22,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
+import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
 /**
  * @author zail
@@ -31,7 +37,11 @@ import javax.servlet.http.HttpServletResponse;
 public class AdminSecurityController {
     
     private final RequestCache requestCache = new HttpSessionRequestCache();
+    // 验证码保存到 session 中的名称
+    public static final String VALIDATION_CODE_SESSION_KEY = "__VALIDATION_CODE_SESSION_KEY";
     
+    @Autowired
+    private ImageValidationCodeGenerator imageValidationCodeGenerator;
     @Autowired
     private WebSecurityProperties webSecurityProperties;
     
@@ -95,5 +105,23 @@ public class AdminSecurityController {
     @ResponseBody
     public JsonResult getCurrentUser(@AuthenticationPrincipal UserDetails userDetails) {
         return JsonResult.success(userDetails);
+    }
+    
+    /**
+     * 图形验证码
+     */
+    @GetMapping("/validationCode/image")
+    public void imageCode(HttpServletRequest request,
+                          HttpServletResponse response) throws IOException {
+        // 创建验证码
+        ImageValidationCode imageValidationCode = imageValidationCodeGenerator.generate();
+        
+        // 保存到 session 中
+        ValidationCode validationCode = new DefaultValidationCode(imageValidationCode.getCode(), imageValidationCode.getExpireTime());
+        request.getSession().setAttribute(VALIDATION_CODE_SESSION_KEY, validationCode);
+        
+        // 写到响应中
+        response.setContentType(MediaType.IMAGE_PNG_VALUE);
+        ImageIO.write(imageValidationCode.getImage(), "png", response.getOutputStream());
     }
 }

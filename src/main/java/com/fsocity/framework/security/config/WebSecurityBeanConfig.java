@@ -4,7 +4,9 @@ import com.fsocity.framework.security.MyJdbcTokenRepositoryImpl;
 import com.fsocity.framework.security.authentication.JwtAuthenticationTokenFilter;
 import com.fsocity.framework.security.properties.WebSecurityProperties;
 import com.fsocity.framework.security.util.JwtTokenUtil;
+import com.fsocity.framework.security.validation.ImageValidationCodeGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -65,6 +67,24 @@ public class WebSecurityBeanConfig {
                 webSecurityProperties.getAdmin().getJwt(),
                 jwtTokenUtil(),
                 userDetailsService);
+    }
+    
+    /**
+     * 图形验证码生成器
+     *
+     * @return
+     */
+    @Bean
+    @ConditionalOnMissingBean(name = "imageValidationCodeGenerator")
+    public ImageValidationCodeGenerator imageValidationCodeGenerator() {
+        ImageValidationCodeGenerator generator = new ImageValidationCodeGenerator();
+        generator.setWidth(webSecurityProperties.getAdmin().getValidationCode().getWidth());
+        generator.setHeight(webSecurityProperties.getAdmin().getValidationCode().getHeight());
+        generator.setFontSize(30);
+        generator.setLines(5);
+        generator.setLength(webSecurityProperties.getAdmin().getValidationCode().getLength());
+        generator.setExpireIn(webSecurityProperties.getAdmin().getValidationCode().getExpireIn());
+        return generator;
     }
     
 }
