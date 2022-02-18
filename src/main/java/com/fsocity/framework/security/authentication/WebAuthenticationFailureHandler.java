@@ -1,11 +1,13 @@
 package com.fsocity.framework.security.authentication;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fsocity.framework.exception.WebException;
 import com.fsocity.framework.security.properties.WebSecurityProperties;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.DefaultRedirectStrategy;
 import org.springframework.security.web.RedirectStrategy;
@@ -61,7 +63,12 @@ public class WebAuthenticationFailureHandler implements AuthenticationFailureHan
     private void saveException(HttpServletRequest request, AuthenticationException exception) {
         HttpSession session = request.getSession();
         if (session != null) {
-            request.getSession().setAttribute(WebAttributes.AUTHENTICATION_EXCEPTION, exception);
+            if (exception instanceof BadCredentialsException) {
+                request.getSession().setAttribute(WebAttributes.AUTHENTICATION_EXCEPTION, new WebException("账号或密码错误！"));
+            }
+            else {
+                request.getSession().setAttribute(WebAttributes.AUTHENTICATION_EXCEPTION, exception);
+            }
         }
     }
 }
