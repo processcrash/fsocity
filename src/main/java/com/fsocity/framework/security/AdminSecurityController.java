@@ -7,6 +7,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.savedrequest.HttpSessionRequestCache;
 import org.springframework.security.web.savedrequest.RequestCache;
 import org.springframework.security.web.savedrequest.SavedRequest;
@@ -82,5 +84,16 @@ public class AdminSecurityController {
     @GetMapping("/index")
     public String index() {
         return "thymeleaf/admin/index";
+    }
+    
+    /**
+     * 当前登录的用户
+     * 使用 @AuthenticationPrincipal 注解, 让 spring 注入 UserDetails 对象,
+     * 该对象为登录的用户信息
+     */
+    @GetMapping("/currentUser")
+    @ResponseBody
+    public JsonResult getCurrentUser(@AuthenticationPrincipal UserDetails userDetails) {
+        return JsonResult.success(userDetails);
     }
 }
