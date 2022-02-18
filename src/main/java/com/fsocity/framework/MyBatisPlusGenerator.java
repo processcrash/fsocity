@@ -37,10 +37,12 @@ public class MyBatisPlusGenerator {
         FastAutoGenerator
                 .create(MYSQL_URL, MYSQL_USERNAME, MYSQL_PASSWORD)
                 .globalConfig(builder -> {
-                    builder.author(AUTHOR) // 设置作者
-                            .enableSwagger() // 开启 swagger 模式
-                            .fileOverride() // 覆盖已生成文件
-                            .outputDir(OUTPUT_DIR); // 指定输出目录
+                    builder.author(AUTHOR)           // 设置作者
+                            .enableSwagger()         // 开启 swagger 模式
+                            .fileOverride()          // 覆盖已生成文件
+                            .outputDir(OUTPUT_DIR)   // 指定输出目录
+                            .disableOpenDir()        // 取消最后打开文件夹
+                    ;
                 })
                 .packageConfig(builder -> {
                     builder.parent(PARENT_PACKAGE_NAME) // 设置父包名
@@ -56,6 +58,8 @@ public class MyBatisPlusGenerator {
                     else {
                         builder.addInclude(tableNames); // 设置需要生成的表名
                     }
+                    builder.controllerBuilder()
+                            .enableRestStyle(); // 开启RestController风格
                     builder
                             .entityBuilder()
                             .enableLombok() // 开启lombok
@@ -74,15 +78,14 @@ public class MyBatisPlusGenerator {
                 .templateConfig(builder -> {
                     builder
                             .controller(TEMPLATES_DIR + "/controller.java.vm")
-                    // .entity(TEMPLATES_DIR + "entity.java.vm")
-                    // .service(TEMPLATES_DIR + "service.java.vm")
-                    // .serviceImpl(TEMPLATES_DIR + "serviceImpl.java.vm")
-                    // .mapper(TEMPLATES_DIR + "mapper.java.vm")
-                    // .mapperXml(TEMPLATES_DIR + "")
+                            .entity(TEMPLATES_DIR + "/entity.java.vm")
+                            .service(TEMPLATES_DIR + "/service.java.vm")
+                            .serviceImpl(TEMPLATES_DIR + "/serviceImpl.java.vm")
+                            .mapper(TEMPLATES_DIR + "/mapper.java.vm")
+                            .mapperXml(TEMPLATES_DIR + "/mapper.xml.vm")
                     ;
                 })
                 .execute();
-        
     }
     
     /**

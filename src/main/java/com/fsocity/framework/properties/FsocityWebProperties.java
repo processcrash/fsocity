@@ -30,6 +30,4 @@ public class FsocityWebProperties {
     // CORS配置
     private CorsProperties cors = new CorsProperties();
     
-    
-    
 }

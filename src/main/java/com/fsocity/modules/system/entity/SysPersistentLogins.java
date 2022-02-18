@@ -1,12 +1,14 @@
 package com.fsocity.modules.system.entity;
 
 import com.baomidou.mybatisplus.annotation.TableName;
-import java.util.Date;
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.Builder;
+import lombok.NoArgsConstructor;
+import lombok.AllArgsConstructor;
 
 /**
  * <p>
@@ -14,12 +16,14 @@ import lombok.EqualsAndHashCode;
  * </p>
  *
  * @author Zail
- * @since 2022-01-30
+ * @since 2022-02-18
  */
 @Data
-@EqualsAndHashCode(callSuper = false)
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @TableName("sys_persistent_logins")
-@ApiModel(value="SysPersistentLogins对象", description="登录持久化表")
+@ApiModel(value = "SysPersistentLogins对象", description = "登录持久化表")
 public class SysPersistentLogins implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -30,7 +34,7 @@ public class SysPersistentLogins implements Serializable {
 
     private String token;
 
-    private Date lastUsed;
+    private LocalDateTime lastUsed;
 
 
 }

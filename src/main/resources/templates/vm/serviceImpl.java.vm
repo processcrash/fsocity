@@ -1,0 +1,53 @@
+package ${package.ServiceImpl};
+
+import ${package.Entity}.${entity};
+import ${package.Mapper}.${table.mapperName};
+import ${package.Service}.${table.serviceName};
+import ${superServiceImplClassPackage};
+import org.springframework.stereotype.Service;
+import org.springframework.beans.factory.annotation.Autowired;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+
+/**
+ * <p>
+ * $!{table.comment} 服务实现类
+ * </p>
+ *
+ * @author ${author}
+ * @since ${date}
+ */
+@Service
+#if(${kotlin})
+open class ${table.serviceImplName} : ${superServiceImplClass}<${table.mapperName}, ${entity}>(), ${table.serviceName} {
+
+}
+#else
+public class ${table.serviceImplName} extends ${superServiceImplClass}<${table.mapperName}, ${entity}> implements ${table.serviceName} {
+    
+    @Autowired
+    private ${table.entityName}Mapper ${table.entityPath}Mapper;
+    
+    @Override
+    public Page<${table.entityName}> findAll(${table.entityName} form, Integer pageNum, Integer pageSize) {
+        LambdaQueryWrapper<${table.entityName}> queryWrapper = new LambdaQueryWrapper<>();
+        if (form.getId() != null) {
+            queryWrapper.eq(${table.entityName}::getId, form.getId());
+        }
+        
+        Page<${table.entityName}> page = new Page<>(pageNum, pageSize);
+        page = ${table.entityPath}Mapper.selectPage(page, queryWrapper);
+        return page;
+    }
+    
+    @Override
+    public boolean deleteById(Integer id) {
+        ${table.entityName} ${table.entityPath} = new ${table.entityName}();
+        ${table.entityPath}.setId(id);
+        // ${table.entityPath}.setStatus(DeleteStatusEnum.DELETED.getCode());
+        int num =  ${table.entityPath}Mapper.updateById(${table.entityPath});
+        return num == 1;
+    }
+
+}
+#end

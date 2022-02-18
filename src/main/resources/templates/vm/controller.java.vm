@@ -1,5 +1,8 @@
 package ${package.Controller};
 
+
+import org.springframework.web.bind.annotation.RequestMapping;
+
 #if(${restControllerStyle})
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -10,15 +13,23 @@ import org.springframework.stereotype.Controller;
 import ${superControllerClassPackage};
 #end
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.BindingResult;
 import ${package.Service}.${table.serviceName};
 import io.swagger.annotations.ApiOperation;
 import ${package.Entity}.${table.entityName};
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.baomidou.mybatisplus.core.toolkit.CollectionUtils;
 import com.fsocity.framework.web.JsonResult;
-import org.springframework.validation.BindingResult;
+import com.fsocity.framework.web.FieldErrorInfo;
+import com.fsocity.framework.web.ResponseStatusEnum;
+import com.fsocity.framework.util.ValidationUtils;
+
+import java.util.List;
 
 /**
- * ${package.ModuleName}前端控制器
+ * <p>
+ * $!{table.comment} 前端控制器
+ * </p>
  *
  * @author ${author}
  * @since ${date}
@@ -28,24 +39,26 @@ import org.springframework.validation.BindingResult;
 #else
 @Controller
 #end
-@RequestMapping("#if(${package.ModuleName})/${package.ModuleName}#end/#if(${controllerMappingHyphenStyle})${controllerMappingHyphen}#else${table.entityPath}#end")
+@RequestMapping("#if(${package.ModuleName})/${package.ModuleName}#end#if(${restControllerStyle})/api#end/#if(${controllerMappingHyphenStyle})${controllerMappingHyphen}#else${table.entityPath}#end")
 #if(${kotlin})
 class ${table.controllerName}#if(${superControllerClass}) : ${superControllerClass}()#end
+
 #else
 #if(${superControllerClass})
 public class ${table.controllerName} extends ${superControllerClass} {
 #else
 public class ${table.controllerName} {
 #end
-    
-    @Autowired
-    private ${table.serviceName} ${table.entityPath}Service;
+
+@Autowired
+private ${table.serviceName} ${table.entityPath}Service;
 
     @ApiOperation("列表")
     @GetMapping("/list")
     public JsonResult list(@RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum,
-                           @RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize) {
-        Page<${table.entityName}> list = ${table.entityPath}Service.findAll(pageSize, pageNum);
+                           @RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize,
+                           ${table.entityName} form) {
+        Page<${table.entityName}> list = ${table.entityPath}Service.findAll(form, pageNum, pageSize);
         return JsonResult.ok(list);
     }
 
@@ -56,28 +69,26 @@ public class ${table.controllerName} {
         return JsonResult.ok(${table.entityPath});
     }
 
-    @ApiOperation("修改")
-    @PostMapping("/edit")
-    public JsonResult edit(@RequestBody @Validated ${table.entityName} ${table.entityPath},
-                           BindingResult bindingResult) {
-        // todo
-        return JsonResult.ok();
-    }
-
-    @ApiOperation("新增")
+    @ApiOperation("保存")
     @PostMapping("/save")
     public JsonResult save(@RequestBody @Validated ${table.entityName} ${table.entityPath},
                            BindingResult bindingResult) {
-        // todo
-        return JsonResult.ok();
+        List<FieldErrorInfo> errors = ValidationUtils.getErrors(bindingResult);
+        if (CollectionUtils.isNotEmpty(errors)) {
+            String errorMsg = "字段：" + errors.get(0).getName() + "；错误信息:" + errors.get(0).getErrorMessage();
+            return JsonResult.err(ResponseStatusEnum.VALIDATE_FAILED.getCode(), errorMsg);
+        }
+        boolean flag = ${table.entityPath}Service.save(${table.entityPath});
+        return JsonResult.ok(flag);
     }
 
     @ApiOperation("删除")
     @PostMapping("/delete/{id}")
     public JsonResult delete(@PathVariable Integer id) {
-        ${table.entityName} ${table.entityPath} = ${table.entityPath}Service.deleteById(id);
-        return JsonResult.ok();
+        boolean flag = ${table.entityPath}Service.deleteById(id);
+        return JsonResult.ok(flag);
     }
+
 }
 
 #end

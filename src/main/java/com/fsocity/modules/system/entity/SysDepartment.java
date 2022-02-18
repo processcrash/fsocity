@@ -1,14 +1,16 @@
 package com.fsocity.modules.system.entity;
 
-import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.annotation.IdType;
-import java.util.Date;
 import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.Builder;
+import lombok.NoArgsConstructor;
+import lombok.AllArgsConstructor;
 
 /**
  * <p>
@@ -16,58 +18,60 @@ import lombok.EqualsAndHashCode;
  * </p>
  *
  * @author Zail
- * @since 2022-01-30
+ * @since 2022-02-18
  */
 @Data
-@EqualsAndHashCode(callSuper = false)
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @TableName("sys_department")
-@ApiModel(value="SysDepartment对象", description="部门表")
+@ApiModel(value = "SysDepartment对象", description = "部门表")
 public class SysDepartment implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @ApiModelProperty(value = "部门id")
+    @ApiModelProperty("部门id")
     @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
 
-    @ApiModelProperty(value = "父部门id")
+    @ApiModelProperty("父部门id")
     private Integer parentId;
 
-    @ApiModelProperty(value = "祖级列表")
+    @ApiModelProperty("祖级列表")
     private String ancestors;
 
-    @ApiModelProperty(value = "部门名称")
+    @ApiModelProperty("部门名称")
     private String name;
 
-    @ApiModelProperty(value = "显示顺序")
+    @ApiModelProperty("显示顺序")
     private Integer orderNum;
 
-    @ApiModelProperty(value = "负责人")
+    @ApiModelProperty("负责人")
     private String leader;
 
-    @ApiModelProperty(value = "联系电话")
+    @ApiModelProperty("联系电话")
     private String phone;
 
-    @ApiModelProperty(value = "邮箱")
+    @ApiModelProperty("邮箱")
     private String email;
 
-    @ApiModelProperty(value = "部门状态（0：正常；1：停用）")
+    @ApiModelProperty("部门状态（0：正常；1：停用）")
     private String status;
 
-    @ApiModelProperty(value = "删除标志（0：正常；1：删除）")
+    @ApiModelProperty("删除标志（0：正常；1：删除）")
     private String delFlag;
 
-    @ApiModelProperty(value = "创建者")
+    @ApiModelProperty("创建者")
     private Integer createBy;
 
-    @ApiModelProperty(value = "创建时间")
-    private Date createTime;
+    @ApiModelProperty("创建时间")
+    private LocalDateTime createTime;
 
-    @ApiModelProperty(value = "更新者")
+    @ApiModelProperty("更新者")
     private Integer updateBy;
 
-    @ApiModelProperty(value = "更新时间")
-    private Date updateTime;
+    @ApiModelProperty("更新时间")
+    private LocalDateTime updateTime;
 
 
 }

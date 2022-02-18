@@ -1,11 +1,13 @@
 package com.fsocity.modules.system.service.impl;
 
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.fsocity.modules.system.entity.SysJob;
 import com.fsocity.modules.system.mapper.SysJobMapper;
 import com.fsocity.modules.system.service.SysJobService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
+import org.springframework.beans.factory.annotation.Autowired;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 
 /**
  * <p>
@@ -13,18 +15,33 @@ import org.springframework.stereotype.Service;
  * </p>
  *
  * @author Zail
- * @since 2022-01-30
+ * @since 2022-02-18
  */
 @Service
 public class SysJobServiceImpl extends ServiceImpl<SysJobMapper, SysJob> implements SysJobService {
     
+    @Autowired
+    private SysJobMapper sysJobMapper;
+    
     @Override
-    public Page<SysJob> findAll(Integer pageSize, Integer pageNum) {
-        return null;
+    public Page<SysJob> findAll(SysJob form, Integer pageNum, Integer pageSize) {
+        LambdaQueryWrapper<SysJob> queryWrapper = new LambdaQueryWrapper<>();
+        if (form.getId() != null) {
+            queryWrapper.eq(SysJob::getId, form.getId());
+        }
+        
+        Page<SysJob> page = new Page<>(pageNum, pageSize);
+        page = sysJobMapper.selectPage(page, queryWrapper);
+        return page;
     }
     
     @Override
-    public SysJob deleteById(Integer id) {
-        return null;
+    public boolean deleteById(Integer id) {
+        SysJob sysJob = new SysJob();
+        sysJob.setId(id);
+        // sysJob.setStatus(DeleteStatusEnum.DELETED.getCode());
+        int num =  sysJobMapper.updateById(sysJob);
+        return num == 1;
     }
+
 }

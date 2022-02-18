@@ -1,14 +1,16 @@
 package com.fsocity.modules.system.entity;
 
-import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.annotation.IdType;
-import java.util.Date;
 import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.Builder;
+import lombok.NoArgsConstructor;
+import lombok.AllArgsConstructor;
 
 /**
  * <p>
@@ -16,46 +18,48 @@ import lombok.EqualsAndHashCode;
  * </p>
  *
  * @author Zail
- * @since 2022-01-30
+ * @since 2022-02-18
  */
 @Data
-@EqualsAndHashCode(callSuper = false)
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @TableName("sys_notice")
-@ApiModel(value="SysNotice对象", description="通知公告表")
+@ApiModel(value = "SysNotice对象", description = "通知公告表")
 public class SysNotice implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @ApiModelProperty(value = "公告ID")
+    @ApiModelProperty("公告ID")
     @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
 
-    @ApiModelProperty(value = "公告类型（0：通知 ；1：公告）")
+    @ApiModelProperty("公告类型（0：通知 ；1：公告）")
     private Integer type;
 
-    @ApiModelProperty(value = "公告标题")
+    @ApiModelProperty("公告标题")
     private String title;
 
-    @ApiModelProperty(value = "公告内容")
+    @ApiModelProperty("公告内容")
     private String content;
 
-    @ApiModelProperty(value = "公告状态（0：正常；1：关闭）")
+    @ApiModelProperty("公告状态（0：正常；1：关闭）")
     private Integer status;
 
-    @ApiModelProperty(value = "备注")
+    @ApiModelProperty("备注")
     private String remark;
 
-    @ApiModelProperty(value = "创建者ID")
+    @ApiModelProperty("创建者ID")
     private Integer createBy;
 
-    @ApiModelProperty(value = "创建时间")
-    private Date createTime;
+    @ApiModelProperty("创建时间")
+    private LocalDateTime createTime;
 
-    @ApiModelProperty(value = "更新者ID")
+    @ApiModelProperty("更新者ID")
     private Integer updateBy;
 
-    @ApiModelProperty(value = "更新时间")
-    private Date updateTime;
+    @ApiModelProperty("更新时间")
+    private LocalDateTime updateTime;
 
 
 }

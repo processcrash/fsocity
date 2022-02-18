@@ -1,8 +1,8 @@
 package com.fsocity.modules.system.service;
 
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.fsocity.modules.system.entity.SysPosition;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 
 /**
  * <p>
@@ -10,11 +10,17 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * </p>
  *
  * @author Zail
- * @since 2022-01-30
+ * @since 2022-02-18
  */
 public interface SysPositionService extends IService<SysPosition> {
     
-    Page<SysPosition> findAll(Integer pageSize, Integer pageNum);
+    /**
+     * 分页查找
+     */
+    Page<SysPosition> findAll(SysPosition form, Integer pageNum, Integer pageSize);
     
-    SysPosition deleteById(Integer id);
+    /**
+     * 根据ID删除
+     */
+    boolean deleteById(Integer id);
 }

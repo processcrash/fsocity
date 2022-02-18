@@ -1,33 +1,45 @@
 package com.fsocity.modules.system.controller;
 
+
+import org.springframework.web.bind.annotation.RequestMapping;
+
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.BindingResult;
 import com.fsocity.modules.system.service.SysUserRoleService;
 import io.swagger.annotations.ApiOperation;
 import com.fsocity.modules.system.entity.SysUserRole;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.baomidou.mybatisplus.core.toolkit.CollectionUtils;
 import com.fsocity.framework.web.JsonResult;
-import org.springframework.validation.BindingResult;
+import com.fsocity.framework.web.FieldErrorInfo;
+import com.fsocity.framework.web.ResponseStatusEnum;
+import com.fsocity.framework.util.ValidationUtils;
+
+import java.util.List;
 
 /**
- * system前端控制器
+ * <p>
+ * 用户和角色关联表 前端控制器
+ * </p>
  *
  * @author Zail
- * @since 2022-01-30
+ * @since 2022-02-18
  */
 @RestController
-@RequestMapping("/admin/api/system/sysUserRole")
+@RequestMapping("/system/api/sysUserRole")
 public class SysUserRoleController {
-    
-    @Autowired
-    private SysUserRoleService sysUserRoleService;
+
+@Autowired
+private SysUserRoleService sysUserRoleService;
 
     @ApiOperation("列表")
     @GetMapping("/list")
     public JsonResult list(@RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum,
-                           @RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize) {
-        Page<SysUserRole> list = sysUserRoleService.findAll(pageSize, pageNum);
+                           @RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize,
+                           SysUserRole form) {
+        Page<SysUserRole> list = sysUserRoleService.findAll(form, pageNum, pageSize);
         return JsonResult.ok(list);
     }
 
@@ -38,27 +50,25 @@ public class SysUserRoleController {
         return JsonResult.ok(sysUserRole);
     }
 
-    @ApiOperation("修改")
-    @PostMapping("/edit")
-    public JsonResult edit(@RequestBody @Validated SysUserRole sysUserRole,
-                           BindingResult bindingResult) {
-        // todo
-        return JsonResult.ok();
-    }
-
-    @ApiOperation("新增")
+    @ApiOperation("保存")
     @PostMapping("/save")
     public JsonResult save(@RequestBody @Validated SysUserRole sysUserRole,
                            BindingResult bindingResult) {
-        // todo
-        return JsonResult.ok();
+        List<FieldErrorInfo> errors = ValidationUtils.getErrors(bindingResult);
+        if (CollectionUtils.isNotEmpty(errors)) {
+            String errorMsg = "字段：" + errors.get(0).getName() + "；错误信息:" + errors.get(0).getErrorMessage();
+            return JsonResult.err(ResponseStatusEnum.VALIDATE_FAILED.getCode(), errorMsg);
+        }
+        boolean flag = sysUserRoleService.save(sysUserRole);
+        return JsonResult.ok(flag);
     }
 
     @ApiOperation("删除")
     @PostMapping("/delete/{id}")
     public JsonResult delete(@PathVariable Integer id) {
-        SysUserRole sysUserRole = sysUserRoleService.deleteById(id);
-        return JsonResult.ok();
+        boolean flag = sysUserRoleService.deleteById(id);
+        return JsonResult.ok(flag);
     }
+
 }
 

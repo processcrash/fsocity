@@ -3,13 +3,14 @@ package com.fsocity.modules.system.entity;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import java.io.Serializable;
+import java.time.LocalDateTime;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
-
-import java.io.Serializable;
-import java.util.Date;
+import lombok.Builder;
+import lombok.NoArgsConstructor;
+import lombok.AllArgsConstructor;
 
 /**
  * <p>
@@ -17,46 +18,48 @@ import java.util.Date;
  * </p>
  *
  * @author Zail
- * @since 2022-01-30
+ * @since 2022-02-18
  */
 @Data
-@EqualsAndHashCode(callSuper = false)
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @TableName("sys_config")
 @ApiModel(value = "SysConfig对象", description = "参数配置表")
 public class SysConfig implements Serializable {
-    
+
     private static final long serialVersionUID = 1L;
-    
-    @ApiModelProperty(value = "参数主键")
+
+    @ApiModelProperty("参数主键")
     @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
-    
-    @ApiModelProperty(value = "系统内置（0：是；1：否）")
+
+    @ApiModelProperty("系统内置（0：是；1：否）")
     private Integer type;
-    
-    @ApiModelProperty(value = "参数名称")
+
+    @ApiModelProperty("参数名称")
     private String name;
-    
-    @ApiModelProperty(value = "参数键名")
+
+    @ApiModelProperty("参数键名")
     private String key;
-    
-    @ApiModelProperty(value = "参数键值")
+
+    @ApiModelProperty("参数键值")
     private String value;
-    
-    @ApiModelProperty(value = "备注")
+
+    @ApiModelProperty("备注")
     private String remark;
-    
-    @ApiModelProperty(value = "创建者")
+
+    @ApiModelProperty("创建者")
     private Integer createBy;
-    
-    @ApiModelProperty(value = "创建时间")
-    private Date createTime;
-    
-    @ApiModelProperty(value = "更新者")
+
+    @ApiModelProperty("创建时间")
+    private LocalDateTime createTime;
+
+    @ApiModelProperty("更新者")
     private Integer updateBy;
-    
-    @ApiModelProperty(value = "更新时间")
-    private Date updateTime;
-    
-    
+
+    @ApiModelProperty("更新时间")
+    private LocalDateTime updateTime;
+
+
 }
