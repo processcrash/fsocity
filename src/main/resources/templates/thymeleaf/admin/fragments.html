@@ -1,0 +1,231 @@
+<!doctype html>
+<html lang="zh_CN" xmlns:th="http://www.thymeleaf.org">
+
+<th:block th:fragment="base-head">
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <!-- http请求转化为https请求 -->
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests"/>
+    <title>Fsocity Admin</title>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="/fsocity-admin/node_modules/admin-lte/plugins/fontawesome-free/css/all.min.css"/>
+    <!-- Theme style -->
+    <link rel="stylesheet" href="/fsocity-admin/node_modules/admin-lte/dist/css/adminlte.min.css"/>
+    <!-- 我的css-->
+    <link rel="stylesheet" href="/fsocity-admin/node_modules/admin-lte/style.css"/>
+</th:block>
+<th:block th:fragment="icheck-bootstrap-css">
+    <!-- icheck bootstrap -->
+    <link rel="stylesheet" href="/fsocity-admin/node_modules/admin-lte/plugins/icheck-bootstrap/icheck-bootstrap.min.css"/>
+</th:block>
+
+<!-- /.content-wrapper -->
+<footer class="main-footer" th:fragment="footer">
+    <strong>
+        Copyright &copy; 2018-<th:block th:text="${#dates.format(#dates.createNow(), 'yyyy')}"/>.
+    </strong>
+</footer>
+
+<th:block th:fragment="base-js">
+    <!-- jQuery -->
+    <script src="/fsocity-admin/node_modules/admin-lte/plugins/jquery/jquery.min.js"></script>
+    <!-- Bootstrap 4 -->
+    <script src="/fsocity-admin/node_modules/admin-lte/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- Bootstrap Switch -->
+    <script src="/fsocity-admin/node_modules/admin-lte/plugins/bootstrap-switch/js/bootstrap-switch.min.js"></script>
+    <!-- layer -->
+    <script src="/fsocity-admin/node_modules/layer-3.5.1/layer.js"></script>
+    <!-- axios -->
+    <script src="/fsocity-admin/node_modules/axios/axios.min.js"></script>
+</th:block>
+<th:block th:fragment="app-js">
+    <!-- AdminLTE App -->
+    <script src="/fsocity-admin/node_modules/admin-lte/dist/js/adminlte.js"></script>
+    <script src="/fsocity-admin/node_modules/admin-lte/index.js"></script>
+</th:block>
+<th:block th:fragment="jQuery-UI-js">
+    <!-- jQuery UI 1.11.4 -->
+    <script src="/fsocity-admin/node_modules/admin-lte/plugins/jquery-ui/jquery-ui.min.js"></script>
+    <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
+    <script> $.widget.bridge('uibutton', $.ui.button) </script>
+</th:block>
+<th:block th:fragment="OverlayScrollbars-js">
+    <!-- overlayScrollbars -->
+    <link rel="stylesheet" href="/fsocity-admin/node_modules/admin-lte/plugins/overlayScrollbars/css/OverlayScrollbars.min.css"/>
+    <!-- overlayScrollbars -->
+    <script src="/fsocity-admin/node_modules/admin-lte/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
+</th:block>
+<th:block th:fragment="bootstrap-table-js">
+    <link rel="stylesheet" href="/fsocity-admin/node_modules/bootstrap-table/dist/bootstrap-table.min.css"/>
+    <link rel="stylesheet" href="/fsocity-admin/node_modules/bootstrap-table/dist/extensions/page-jump-to/bootstrap-table-page-jump-to.css"/>
+    <link href="/fsocity-admin/node_modules/jquery-resizable-columns-0.2.3/jquery.resizableColumns.css" rel="stylesheet"/>
+    
+    <script src="/fsocity-admin/node_modules/bootstrap-table/dist/bootstrap-table.min.js"></script>
+    <script src="/fsocity-admin/node_modules/bootstrap-table/dist/locale/bootstrap-table-zh-CN.min.js"></script>
+    <script src="/fsocity-admin/node_modules/bootstrap-table/dist/extensions/page-jump-to/bootstrap-table-page-jump-to.min.js"></script>
+    <script src="/fsocity-admin/node_modules/jquery-resizable-columns-0.2.3/jquery.resizableColumns.min.js"></script>
+    <script src="/fsocity-admin/node_modules/bootstrap-table/dist/extensions/resizable/bootstrap-table-resizable.min.js"></script>
+    <script>/*<![CDATA[*/
+    // bootstrap-table 的默认设置
+    $.extend($.fn.bootstrapTable.defaults, {
+        locale: 'zh-CN', // i18n国际化设置
+        toolbar: '#toolbar', // 设置操作按钮
+        resizable: true, // 可调整大小
+        showRefresh: true, // 显示刷新按钮
+        showFullscreen: true, // 显示全屏
+        // search: true, // 开启搜索
+        // showSearchButton: true, // 开启搜索按钮
+        // showSearchClearButton: true, // 开启清空搜索关键字按钮
+        showColumns: true, // 显示列下拉列表
+        showColumnsToggleAll: true, // 显示显示全部
+        checkboxHeader: true, // 显示复选框
+        idField: 'id', // 用于checkbox的value
+        selectItemName: 'id', // 用于checkbox的name
+        pagination: true, // 开启分页
+        sidePagination: 'server', // server:服务器端分页|client：前端分页
+        pageNumber: 1, // 初始化加载第一页
+        pageSize: 10, // 单页记录数
+        pageList: [10, 20, 50, 100, 200], // 可选择单页记录数
+        showJumpTo: true, // 显示页面跳转工具
+        /**
+         * 设置查询参数类型。可以取值limit，这样queryParams方法中传入的参数包括limit, offset, search, sort, order。
+         * 若取值为空字符串，则queryParams方法中传入的参数包括pageSize, pageNumber, searchText, sortName, sortOrder.
+         */
+        queryParamsType: '',
+        // 上传服务器的参数
+        queryParams: function (params) {
+            var searchObject = {}
+            // 如果有搜索表单，则把搜索表单的内容添加到搜索里
+            var $searchForm = $('#search-form')
+            if ($searchForm.length > 0) {
+                var serializeArray = $searchForm.serializeArray();
+                if (serializeArray.length > 0) {
+                    for (var i = 0; i < serializeArray.length; i++) {
+                        var name = serializeArray[i].name
+                        var val = serializeArray[i].value
+                        if (!val) continue
+                        searchObject[name] = val
+                    }
+                }
+            }
+            return Object.assign({}, params, searchObject)
+        },
+        responseHandler: function (res) {
+            return {
+                total: res.data.totalElements,
+                rows: res.data.content
+            }
+        },
+    })
+    
+    $(function () {
+        var $searchForm = $('#search-form')
+        window.$bootstrapTable = null
+        
+        // 搜索
+        $('#search-btn').on('click', function () {
+            $bootstrapTable.bootstrapTable('refresh')
+        })
+        // 重置
+        $('#reset-btn').on('click', function () {
+            // 重置表单所有参数
+            $searchForm[0].reset()
+            // 刷新表
+            $bootstrapTable.bootstrapTable('resetSearch')
+        })
+    })
+    
+    /*]]>*/</script>
+</th:block>
+<th:block th:fragment="moment-js">
+    <script src="/fsocity-admin/node_modules/admin-lte/plugins/moment/moment-with-locales.js"></script>
+    <script> moment.locale('zh-cn') </script>
+</th:block>
+<th:block th:fragment="bt-extensions-treegrid-js">
+    <link href="/fsocity-admin/node_modules/jquery-treegrid-0.2.0/css/jquery.treegrid.min.css" rel="stylesheet"/>
+    <script src="/fsocity-admin/node_modules/jquery-treegrid-0.2.0/js/jquery.treegrid.min.js"></script>
+    <script src="/fsocity-admin/node_modules/bootstrap-table/dist/extensions/treegrid/bootstrap-table-treegrid.min.js"></script>
+</th:block>
+<th:block th:fragment="jquery-validation-js">
+    <!-- jquery-validation -->
+    <script src="/fsocity-admin/node_modules/admin-lte/plugins/jquery-validation/jquery.validate.min.js"></script>
+    <script src="/fsocity-admin/node_modules/admin-lte/plugins/jquery-validation/localization/messages_zh.min.js"></script>
+    <script src="/fsocity-admin/node_modules/admin-lte/plugins/jquery-validation/additional-methods.min.js"></script>
+    <script>/*<![CDATA[*/
+    
+    /**
+     * 设置数据校验默认的配置
+     */
+    $.validator.setDefaults({
+        submitHandler: function () {
+            alert("校验完成，请重写submitHandler方法，用以提交数据！");
+        },
+        // 展示错误的标签
+        errorElement: 'span',
+        // 错误信息如何追加
+        errorPlacement: function (error, element) {
+            error.addClass('invalid-feedback')
+            var $formGroup = $(element).parents('.form-group')
+            var $col = $formGroup.find('.col-sm-10')
+            if ($col.length > 0) {
+                $col.append(error)
+            }
+            else {
+                $formGroup.append(error)
+            }
+        },
+        // 设置高亮
+        highlight: function (element, errorClass, validClass) {
+            $(element).addClass('is-invalid')
+        },
+        // 设置取消高亮
+        unhighlight: function (element, errorClass, validClass) {
+            $(element).removeClass('is-invalid');
+        },
+    })
+    // 添加一些实用的验证方法
+    // 正则表达式的方法
+    $.validator.addMethod(
+            "regex",
+            function (value, element, params) {
+                var regex = new RegExp(params)
+                return this.optional(element) || regex.test(value)
+            },
+            "请填写正确格式的信息！"
+    );
+    /*]]>*/</script>
+</th:block>
+<th:block th:fragment="echars-js">
+    <script src="/fsocity-admin/node_modules/echarts-5.2.0/echarts.min.js"></script>
+</th:block>
+<th:block th:fragment="select2-js">
+    <link rel="stylesheet" href="/fsocity-admin/node_modules/admin-lte/plugins/select2/css/select2.min.css"/>
+    <link rel="stylesheet" href="/fsocity-admin/node_modules/admin-lte/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css"/>
+    <script src="/fsocity-admin/node_modules/admin-lte/plugins/select2/js/select2.full.min.js"></script>
+</th:block>
+<th:block th:fragment="zTree-js">
+    <link rel="stylesheet" href="/fsocity-admin/node_modules/zTree-3.5.46/css/zTreeStyle/zTreeStyle.css"/>
+    <script src="/fsocity-admin/node_modules/zTree-3.5.46/js/jquery.ztree.all.min.js"></script>
+</th:block>
+<th:block th:fragment="vue-js">
+    <script src="/fsocity-admin/node_modules/vue-2.6.14/vue.min.js"></script>
+</th:block>
+<th:block th:fragment="bootstrap-datepicker-js">
+    <link rel="stylesheet" href="/fsocity-admin/node_modules/bootstrap-datepicker-1.9.0/css/bootstrap-datepicker.standalone.min.css"/>
+    <script src="/fsocity-admin/node_modules/bootstrap-datepicker-1.9.0/js/bootstrap-datepicker.min.js"></script>
+    <script src="/fsocity-admin/node_modules/bootstrap-datepicker-1.9.0/locales/bootstrap-datepicker.zh-CN.min.js"></script>
+</th:block>
+<th:block th:fragment="daterangepicker-js">
+    <link rel="stylesheet" href="/fsocity-admin/node_modules/admin-lte/plugins/daterangepicker/daterangepicker.css"/>
+    <script src="/fsocity-admin/node_modules/admin-lte/plugins/daterangepicker/daterangepicker.js"></script>
+    <script>
+        $.fn.daterangepicker.defaultOptions = Object.assign({}, $.fn.daterangepicker.defaultOptions, {
+            locale: {
+                applyLabel: '确认',
+                cancelLabel: '取消',
+            },
+        })
+    </script>
+</th:block>
+
+</html>

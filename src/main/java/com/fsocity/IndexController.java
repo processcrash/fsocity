@@ -13,7 +13,7 @@ public class IndexController {
     /**
      * 首页
      */
-    @GetMapping
+    @GetMapping("/")
     public String index() {
         return "thymeleaf/www/index";
     }

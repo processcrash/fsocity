@@ -1,14 +1,122 @@
 <!doctype html>
-<html lang="zh_CN">
+<html lang="zh_CN" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8"/>
-    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"/>
-    <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
-    <title>登录</title>
+    <th:block th:include="thymeleaf/admin/fragments :: base-head"/>
+    <th:block th:include="thymeleaf/admin/fragments :: icheck-bootstrap-css"/>
 </head>
-<body>
+<body class="login-page">
 
+<div class="login-box">
+    <!-- /.login-logo -->
+    <div class="card card-outline card-primary">
+        
+        <div class="card-header text-center">
+            <h2>Fsocity Admin</h2>
+        </div>
+        
+        <div class="card-body">
+            
+            <div th:if="${#httpSession != null and #httpSession.getAttribute('SPRING_SECURITY_LAST_EXCEPTION') != null}">
+                <p class="text-danger"
+                   th:text="${#httpSession.getAttribute('SPRING_SECURITY_LAST_EXCEPTION').message}"></p>
+            </div>
+            
+            <form id="form" action="/admin/login" method="post">
+                
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control" name="username" placeholder="用户名"/>
+                    <div class="input-group-append">
+                        <div class="input-group-text">
+                            <span class="fas fa-user"></span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="input-group mb-3">
+                    <input type="password" class="form-control" name="password" placeholder="密码"/>
+                    <div class="input-group-append">
+                        <div class="input-group-text">
+                            <span class="fas fa-lock"></span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control" name="validationCode"
+                           id="validationCode"
+                           autocomplete="off"
+                           maxlength="4"
+                           placeholder="验证码"/>
+                    <div class="input-group-append">
+                        <img style="height: 2.1875rem"
+                             id="validation-image-code"
+                             src="/validation/code/image"
+                             onclick="changeValidationCode();"
+                             alt="点击图片刷新验证码"/>
+                    </div>
+                </div>
+                <div class="input-group mb-3">
+                    <div class="icheck-primary">
+                        <input type="checkbox" id="rememberMe" name="rememberMe" checked="checked"/>
+                        <label for="rememberMe">记住我</label>
+                    </div>
+                </div>
+                <div class="input-group mb-3">
+                    <button type="submit" class="btn btn-primary btn-block">登录</button>
+                </div>
+            </form>
+        
+        </div>
+        <!-- /.card-body -->
+    </div>
+    <!-- /.card -->
+</div>
+<!-- /.login-box -->
 
-
+<th:block th:replace="thymeleaf/admin/fragments :: base-js"/>
+<th:block th:replace="thymeleaf/admin/fragments :: jquery-validation-js"/>
+<th:block th:include="thymeleaf/admin/fragments :: app-js"/>
+<script>
+    // 如果有父页面，则让父页面跳转
+    if (isInIframe) {
+        parent.window.history.go(0)
+    }
+    
+    // 更换验证码
+    function changeValidationCode() {
+        var time = new Date().getTime();
+        document.getElementById("validation-image-code").setAttribute("src", "/validation/code/image?time=" + time);
+    }
+    
+    $(function () {
+        $('#form').validate({
+            rules: {
+                username: {
+                    required: true,
+                },
+                password: {
+                    required: true,
+                },
+                validationCode: {
+                    required: true,
+                }
+            },
+            messages: {
+                username: {
+                    required: "请输入用户名！",
+                },
+                password: {
+                    required: "请输入密码！",
+                },
+                validationCode: {
+                    required: "请输入验证码!"
+                }
+            },
+            submitHandler: function (form) {
+                form.submit()
+            }
+        });
+    });
+</script>
 </body>
 </html>
