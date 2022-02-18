@@ -50,11 +50,6 @@ public class AdminSecurityController {
         return "thymeleaf/admin/login";
     }
     
-    @GetMapping("/authenticationRequire")
-    public String authenticationRequire() {
-        return "thymeleaf/admin/authenticationRequire";
-    }
-    
     /**
      * 当需要身份认证时跳转到这里处理
      */
@@ -71,7 +66,7 @@ public class AdminSecurityController {
         return "redirect:" + webSecurityProperties.getAdmin().getLoginPage();
     }
     
-    @GetMapping(value = "/authentication/require")
+    @GetMapping(value = "/authenticationRequire")
     @ResponseStatus(code = HttpStatus.UNAUTHORIZED)
     @ResponseBody
     public JsonResult requireAuthentication(HttpServletRequest request,
