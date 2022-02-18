@@ -9,7 +9,6 @@
         <result column="name" property="name" />
         <result column="sort_num" property="sortNum" />
         <result column="data_scope" property="dataScope" />
-        <result column="del_flag" property="delFlag" />
         <result column="remark" property="remark" />
         <result column="status" property="status" />
         <result column="create_by" property="createBy" />
@@ -20,7 +19,7 @@
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, key, name, sort_num, data_scope, del_flag, remark, status, create_by, create_time, update_by, update_time
+        id, key, name, sort_num, data_scope, remark, status, create_by, create_time, update_by, update_time
     </sql>
 
 </mapper>

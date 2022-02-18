@@ -10,6 +10,7 @@
         <result column="key" property="key" />
         <result column="value" property="value" />
         <result column="remark" property="remark" />
+        <result column="status" property="status" />
         <result column="create_by" property="createBy" />
         <result column="create_time" property="createTime" />
         <result column="update_by" property="updateBy" />
@@ -18,7 +19,7 @@
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, type, name, key, value, remark, create_by, create_time, update_by, update_time
+        id, type, name, key, value, remark, status, create_by, create_time, update_by, update_time
     </sql>
 
 </mapper>

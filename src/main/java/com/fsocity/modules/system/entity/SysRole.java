@@ -46,13 +46,10 @@ public class SysRole implements Serializable {
     @ApiModelProperty("数据范围（1：全部数据权限 2：自定数据权限 3：本部门数据权限 4：本部门及以下数据权限）")
     private Integer dataScope;
 
-    @ApiModelProperty("删除标志（0：存在；1：删除）")
-    private Integer delFlag;
-
     @ApiModelProperty("备注")
     private String remark;
 
-    @ApiModelProperty("角色状态（0：正常；1：停用）")
+    @ApiModelProperty("状态（0：正常；1：删除）")
     private Integer status;
 
     @ApiModelProperty("创建者ID")

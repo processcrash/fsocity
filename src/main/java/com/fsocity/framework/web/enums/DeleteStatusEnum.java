@@ -1,6 +1,5 @@
 package com.fsocity.framework.web.enums;
 
-import com.fsocity.framework.web.CodeEnum;
 import lombok.Getter;
 
 /**

@@ -1,4 +1,4 @@
-package com.fsocity.framework.web;
+package com.fsocity.framework.web.enums;
 
 /**
  * @author zail

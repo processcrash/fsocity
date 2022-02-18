@@ -55,11 +55,8 @@ public class SysDepartment implements Serializable {
     @ApiModelProperty("邮箱")
     private String email;
 
-    @ApiModelProperty("部门状态（0：正常；1：停用）")
+    @ApiModelProperty("状态（0：正常；1：删除）")
     private String status;
-
-    @ApiModelProperty("删除标志（0：正常；1：删除）")
-    private String delFlag;
 
     @ApiModelProperty("创建者")
     private Integer createBy;

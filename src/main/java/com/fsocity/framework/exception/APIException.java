@@ -1,6 +1,6 @@
 package com.fsocity.framework.exception;
 
-import com.fsocity.framework.web.CodeEnum;
+import com.fsocity.framework.web.enums.CodeEnum;
 
 /**
  * @author zail

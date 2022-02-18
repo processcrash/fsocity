@@ -38,44 +38,60 @@ public class MyWebSecurityConfigurer extends WebSecurityConfigurerAdapter {
     
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+        if (!webSecurityProperties.getCsrf().isEnable()) {
+            http.csrf().disable(); // 关闭csrf
+        }
+        if (!webSecurityProperties.getCors().isEnable()) {
+            http.cors().disable(); // 关闭cors
+        }
     
+        // 如果不开启
+        if (!webSecurityProperties.getAdmin().isEnable()) {
+            http.httpBasic().disable()
+                    .formLogin().disable();
+            return;
+        }
+        
+        // 是否开启JWT认证
+        if (webSecurityProperties.getAdmin().getJwt().isEnable()) {
+            http.addFilterBefore(jwtAuthenticationTokenFilter, UsernamePasswordAuthenticationFilter.class);
+        }
+        
         http
-                // JWT 认证过滤器
-                .addFilterBefore(jwtAuthenticationTokenFilter, UsernamePasswordAuthenticationFilter.class)
                 // 增加验证码验证过滤器
                 // .addFilterBefore(validationCodeFilter, UsernamePasswordAuthenticationFilter.class)
-            
+                
                 // 配置表单登录
                 .formLogin()
-                .loginPage(webSecurityProperties.getRequireAuthenticationUrl()) // 处理登录页面
-                .loginProcessingUrl(webSecurityProperties.getLoginProcessingUrl()) // 处理登录的 url
-            
+                .loginPage(webSecurityProperties.getAdmin().getRequireAuthenticationUrl()) // 处理登录页面
+                .loginProcessingUrl(webSecurityProperties.getAdmin().getLoginProcessingUrl()) // 处理登录的 url
+                
                 .successHandler(webAuthenticationSuccessHandler) // 配置登录成功处理器
                 .failureHandler(webAuthenticationFailureHandler) // 配置登录失败处理器
                 .and()
-            
+                
                 // 配置退出登录
                 .logout()
-                .logoutUrl(webSecurityProperties.getLogoutUrl())
+                .logoutUrl(webSecurityProperties.getAdmin().getLogoutUrl())
                 .and()
-            
+                
                 // 配置 记住我
                 .rememberMe()
-                .rememberMeParameter(webSecurityProperties.getRememberMeName())
+                .rememberMeParameter(webSecurityProperties.getAdmin().getRememberMeName())
                 .tokenRepository(persistentTokenRepository)
-                .tokenValiditySeconds(webSecurityProperties.getRememberMeSeconds())
+                .tokenValiditySeconds(webSecurityProperties.getAdmin().getRememberMeSeconds())
                 .userDetailsService(userDetailsService)
                 .and()
-            
+                
                 // 身份请求认证
                 .authorizeRequests()
-            
+                
                 // 配置不需要身份认证的链接
-                .antMatchers(webSecurityProperties.getUnauthenticatedUrls())
+                .antMatchers(webSecurityProperties.getAdmin().getUnauthenticatedUrls())
                 .permitAll()
-            
+                
                 // 配置需要身份认证的链接
-                .antMatchers(webSecurityProperties.getAuthenticatedUrls())
+                .antMatchers(webSecurityProperties.getAdmin().getAuthenticatedUrls())
                 .authenticated()
                 .and()
                 
@@ -83,18 +99,11 @@ public class MyWebSecurityConfigurer extends WebSecurityConfigurerAdapter {
                 .headers()
                 .frameOptions()
                 .disable()
-            
+                
                 .and()
                 .exceptionHandling() // 异常处理
                 .accessDeniedHandler(webAccessDeniedHandler) // 配置访问拒绝处理器
-                .accessDeniedPage(webSecurityProperties.getAccessDeniedUrl());
-        
-        if (!webSecurityProperties.getCsrf().getEnable()) {
-            http.csrf().disable(); // 关闭csrf
-        }
-        if (!webSecurityProperties.getCors().getEnable()) {
-            http.cors().disable(); // 关闭cors
-        }
+                .accessDeniedPage(webSecurityProperties.getAdmin().getAccessDeniedUrl());
         
     }
     

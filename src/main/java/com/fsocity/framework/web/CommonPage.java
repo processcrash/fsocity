@@ -9,6 +9,7 @@ import java.util.List;
  * @author zail
  * @date 2022/1/24
  */
+@Deprecated
 public class CommonPage<T> {
     private Integer pageNum;
     private Integer pageSize;

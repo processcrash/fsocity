@@ -70,7 +70,7 @@ public class SysOperationLog implements Serializable {
     @ApiModelProperty("返回参数")
     private String result;
 
-    @ApiModelProperty("操作状态（0：正常；1：异常）")
+    @ApiModelProperty("状态（0：正常；1：删除）")
     private Integer status;
 
     @ApiModelProperty("错误消息")

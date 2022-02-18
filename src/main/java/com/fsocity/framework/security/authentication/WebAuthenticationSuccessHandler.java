@@ -32,8 +32,8 @@ public class WebAuthenticationSuccessHandler implements AuthenticationSuccessHan
     @Autowired
     private WebSecurityProperties webSecurityProperties;
     
-    private RequestCache requestCache = new HttpSessionRequestCache();
-    private RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
+    private final RequestCache requestCache = new HttpSessionRequestCache();
+    private final RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
     
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request,
@@ -57,7 +57,7 @@ public class WebAuthenticationSuccessHandler implements AuthenticationSuccessHan
             targetUrl = savedRequest.getRedirectUrl();
         }
         else {
-            targetUrl = webSecurityProperties.getLoginSuccessUrl();
+            targetUrl = webSecurityProperties.getAdmin().getLoginSuccessUrl();
         }
         
         redirectStrategy.sendRedirect(request, response, targetUrl);

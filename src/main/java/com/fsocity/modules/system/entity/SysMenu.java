@@ -67,6 +67,9 @@ public class SysMenu implements Serializable {
     @ApiModelProperty("备注")
     private String remark;
 
+    @ApiModelProperty("状态（0：正常；1：删除）")
+    private Integer status;
+
     @ApiModelProperty("创建者ID")
     private Integer createBy;
 

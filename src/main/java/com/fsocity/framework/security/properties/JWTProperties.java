@@ -8,6 +8,8 @@ import lombok.Data;
  */
 @Data
 public class JWTProperties {
+    // 是否开启JWT验证
+    private boolean enable = false;
     // 头名称
     private String httpHeaderName = "Authorization";
     // 秘钥

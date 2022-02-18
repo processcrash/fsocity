@@ -46,7 +46,7 @@ public class SysJobLog implements Serializable {
     @ApiModelProperty("日志信息")
     private String jobMessage;
 
-    @ApiModelProperty("执行状态（0：正常；1：失败）")
+    @ApiModelProperty("状态（0：正常；1：删除）")
     private Integer status;
 
     @ApiModelProperty("异常信息")

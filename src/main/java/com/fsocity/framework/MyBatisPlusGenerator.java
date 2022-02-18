@@ -50,6 +50,9 @@ public class MyBatisPlusGenerator {
                             .pathInfo(Collections.singletonMap(OutputFile.mapperXml, MAPPER_OUTPUT_DIR + "/" + module)); // 设置mapperXml生成路径
                 })
                 .strategyConfig(builder -> {
+                    // 设置过滤表前缀
+                    builder.addTablePrefix("t_", "tb_", "c_");
+                    
                     // 当表名中带*号时可以启用通配符模式
                     if (tableNames.length == 1 && tableNames[0].lastIndexOf('*') == tableNames[0].length() - 1) {
                         String tablePrefix = tableNames[0].substring(0, tableNames[0].length() - 1);

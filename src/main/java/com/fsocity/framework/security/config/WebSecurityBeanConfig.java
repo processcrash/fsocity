@@ -56,13 +56,13 @@ public class WebSecurityBeanConfig {
     
     @Bean
     public JwtTokenUtil jwtTokenUtil() {
-        return new JwtTokenUtil(webSecurityProperties.getJwt());
+        return new JwtTokenUtil(webSecurityProperties.getAdmin().getJwt());
     }
     
     @Bean
     public JwtAuthenticationTokenFilter jwtAuthenticationTokenFilter() {
         return new JwtAuthenticationTokenFilter(
-                webSecurityProperties.getJwt(),
+                webSecurityProperties.getAdmin().getJwt(),
                 jwtTokenUtil(),
                 userDetailsService);
     }

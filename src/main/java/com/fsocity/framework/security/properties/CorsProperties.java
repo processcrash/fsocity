@@ -8,5 +8,7 @@ import lombok.Data;
  */
 @Data
 public class CorsProperties {
-    private Boolean enable = true;
+    
+    private boolean enable = true;
+    
 }

@@ -32,7 +32,7 @@ public class WebAccessDeniedHandler implements AccessDeniedHandler {
     @Autowired
     private WebSecurityProperties webSecurityProperties;
     
-    private RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
+    private final RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
     
     @Override
     public void handle(HttpServletRequest request, HttpServletResponse response, AccessDeniedException accessDeniedException) throws IOException, ServletException {
@@ -44,12 +44,11 @@ public class WebAccessDeniedHandler implements AccessDeniedHandler {
             response.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
             response.setContentType(MediaType.APPLICATION_JSON_VALUE);
             response.getWriter().write(objectMapper.writeValueAsString(accessDeniedException));
-            
             return;
         }
         
         // 跳转到访问拒绝页面
-        redirectStrategy.sendRedirect(request, response, webSecurityProperties.getAccessDeniedUrl());
+        redirectStrategy.sendRedirect(request, response, webSecurityProperties.getAdmin().getAccessDeniedUrl());
     }
     
 }

@@ -4,8 +4,6 @@ server:
 spring:
   application:
     name: fsocity
-  profiles:
-    active: dev
 
 mybatis-plus:
   mapper-locations: classpath:/mapper/**/*.xml
@@ -25,25 +23,34 @@ fsocity:
     version: 1.0.0
     enable-security: true
   security:
-    unauthenticated-urls: # 安全路径白名单
-      - /swagger-ui.html
-      - /swagger-resources/**
-      - /swagger/**
-      - /**/v2/api-docs
-      - /**/*.js
-      - /**/*.css
-      - /**/*.png
-      - /**/*.ico
-      - /webjars/springfox-swagger-ui/**
-      - /actuator/**
-      - /druid/**
-      - /admin/login
-      - /admin/register
-      - /admin/info
-      - /admin/logout
-    jwt:
+    csrf: # 关闭csrf
+      enable: false
+    cors: # 关闭cors
+      enable: false
+    admin:
       enable: true
-      http-header-name: Authorization #JWT存储的请求头
-      secret: mall-admin-secret #JWT加解密使用的密钥
-      expiration: 604800 #JWT的超期限时间(60*60*24*7)
-      token-head: 'Bearer '  #JWT负载中拿到开头
+      authenticated-urls: # 需要安全认证的地址
+        - /admin
+        - /admin/**
+      unauthenticated-urls: # 安全路径白名单
+        - /admin/login
+        - /admin/logout
+        - /admin/authenticationRequire
+        - /admin/accessDenied
+      require-authentication-url: /admin/authenticationRequire
+      login-page: /admin/login
+      login-processing-url: /admin/login
+      logout-url: /admin/logout
+      login-success-url: /admin/index
+      access-denied-url: /admin/accessDenied
+      validation-code:
+        type: image
+      remember-me-name: rememberMe
+      remember-me-seconds: 7200
+      jwt:
+        enable: true
+        http-header-name: Authorization #JWT存储的请求头
+        secret: mall-admin-secret #JWT加解密使用的密钥
+        expiration: 604800 #JWT的超期限时间(60*60*24*7)
+        token-head: 'Bearer '  #JWT负载中拿到开头
+    

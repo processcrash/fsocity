@@ -10,6 +10,6 @@ import lombok.Data;
 public class CsrfProperties {
     
     // 是否开启
-    private Boolean enable = true;
+    private boolean enable = true;
     
 }

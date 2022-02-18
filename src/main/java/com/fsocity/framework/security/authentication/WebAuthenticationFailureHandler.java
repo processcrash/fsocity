@@ -52,7 +52,7 @@ public class WebAuthenticationFailureHandler implements AuthenticationFailureHan
         
         // 跳转到登录页面重新登录
         saveException(request, exception);
-        redirectStrategy.sendRedirect(request, response, webSecurityProperties.getLoginPage());
+        redirectStrategy.sendRedirect(request, response, webSecurityProperties.getAdmin().getLoginPage());
     }
     
     /**

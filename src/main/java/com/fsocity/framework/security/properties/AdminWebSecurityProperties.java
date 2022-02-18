@@ -10,7 +10,7 @@ import lombok.Data;
 public class AdminWebSecurityProperties {
     
     // 是否开启
-    private Boolean enable = true;
+    private boolean enable = true;
     
     // 需要身份认证的匹配链接
     private String[] authenticatedUrls = {"/admin", "/admin/**"};
@@ -44,12 +44,6 @@ public class AdminWebSecurityProperties {
     
     // 记住我时间配置(单位秒)
     private Integer rememberMeSeconds = 3600 * 2;
-    
-    // CSRF配置
-    private CsrfProperties csrf = new CsrfProperties();
-    
-    // CORS配置
-    private CorsProperties cors = new CorsProperties();
     
     // jwt 配置
     private JWTProperties jwt = new JWTProperties();
