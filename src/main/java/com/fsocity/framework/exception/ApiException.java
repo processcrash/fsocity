@@ -6,24 +6,24 @@ import com.fsocity.framework.web.enums.CodeEnum;
  * @author zail
  * @date 2022/1/24
  */
-public class APIException extends RuntimeException {
+public class ApiException extends RuntimeException {
     
     private CodeEnum errorCode;
     
-    public APIException(CodeEnum errorCode) {
+    public ApiException(CodeEnum errorCode) {
         super(errorCode.getMessage());
         this.errorCode = errorCode;
     }
     
-    public APIException(String message) {
+    public ApiException(String message) {
         super(message);
     }
     
-    public APIException(Throwable cause) {
+    public ApiException(Throwable cause) {
         super(cause);
     }
     
-    public APIException(String message, Throwable cause) {
+    public ApiException(String message, Throwable cause) {
         super(message, cause);
     }
     

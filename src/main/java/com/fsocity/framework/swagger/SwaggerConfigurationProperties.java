@@ -1,4 +1,4 @@
-package com.fsocity.framework.properties;
+package com.fsocity.framework.swagger;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;

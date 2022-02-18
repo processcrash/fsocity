@@ -1,6 +1,5 @@
-package com.fsocity.framework.config;
+package com.fsocity.framework.swagger;
 
-import com.fsocity.framework.properties.SwaggerConfigurationProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

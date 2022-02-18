@@ -1,6 +1,6 @@
-package com.fsocity.framework.service.impl;
+package com.fsocity.framework.redis.impl;
 
-import com.fsocity.framework.service.RedisService;
+import com.fsocity.framework.redis.RedisService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 

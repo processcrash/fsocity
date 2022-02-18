@@ -1,11 +1,11 @@
-package com.fsocity.framework.config;
+package com.fsocity.framework.redis;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.jsontype.impl.LaissezFaireSubTypeValidator;
-import com.fsocity.framework.service.RedisService;
-import com.fsocity.framework.service.impl.RedisServiceImpl;
+import com.fsocity.framework.redis.RedisService;
+import com.fsocity.framework.redis.impl.RedisServiceImpl;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

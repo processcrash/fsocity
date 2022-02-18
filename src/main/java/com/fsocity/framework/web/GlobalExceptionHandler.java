@@ -1,6 +1,6 @@
 package com.fsocity.framework.web;
 
-import com.fsocity.framework.exception.APIException;
+import com.fsocity.framework.exception.ApiException;
 import org.springframework.validation.BindException;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
@@ -17,8 +17,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class GlobalExceptionHandler {
     
     @ResponseBody
-    @ExceptionHandler(value = APIException.class)
-    public JsonResult handle(APIException e) {
+    @ExceptionHandler(value = ApiException.class)
+    public JsonResult handle(ApiException e) {
         if (e.getErrorCode() != null) {
             return JsonResult.fail(e.getErrorCode());
         }

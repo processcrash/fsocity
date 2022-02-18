@@ -1,4 +1,4 @@
-package com.fsocity.framework.config;
+package com.fsocity.framework.mybatis;
 
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.context.annotation.Configuration;

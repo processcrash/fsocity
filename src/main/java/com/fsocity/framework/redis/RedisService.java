@@ -1,4 +1,4 @@
-package com.fsocity.framework.service;
+package com.fsocity.framework.redis;
 
 import org.springframework.stereotype.Service;
 
