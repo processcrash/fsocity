@@ -50,7 +50,7 @@
                     <div class="input-group-append">
                         <img style="height: 2.1875rem"
                              id="validation-image-code"
-                             src="/validation/code/image"
+                             src="/admin/validationCode/image"
                              onclick="changeValidationCode();"
                              alt="点击图片刷新验证码"/>
                     </div>
@@ -85,7 +85,7 @@
     // 更换验证码
     function changeValidationCode() {
         var time = new Date().getTime();
-        document.getElementById("validation-image-code").setAttribute("src", "/validation/code/image?time=" + time);
+        document.getElementById("validation-image-code").setAttribute("src", "/validationCode/image?time=" + time);
     }
     
     $(function () {

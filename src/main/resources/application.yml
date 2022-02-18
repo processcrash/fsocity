@@ -105,6 +105,7 @@ fsocity:
         - /admin/logout
         - /admin/authenticationRequire
         - /admin/accessDenied
+        - /admin/validationCode/**
       require-authentication-url: /admin/authenticationRequire
       login-page: /admin/login
       login-processing-url: /admin/login
