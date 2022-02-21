@@ -74,6 +74,8 @@ spring:
     cache: false # 取消页面cache
 
 mybatis-plus:
+  # 去@MapperScan注解改
+  # mapper-scan-locations: com.fsocity.modules.*.mapper
   mapper-locations: classpath:/mapper/**/*.xml
   global-config:
     db-config:
