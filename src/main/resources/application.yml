@@ -80,6 +80,7 @@ mybatis-plus:
   global-config:
     db-config:
       id-type: auto
+      column-format: '`%s`' # 字段格式化。用于解决字段名使用mysql关键字的问题。
   configuration:
     auto-mapping-behavior: partial
     map-underscore-to-camel-case: true
