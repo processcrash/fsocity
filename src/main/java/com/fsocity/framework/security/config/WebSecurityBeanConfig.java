@@ -13,7 +13,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.DelegatingPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import javax.sql.DataSource;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -28,8 +27,6 @@ public class WebSecurityBeanConfig {
     private WebSecurityProperties webSecurityProperties;
     @Autowired
     private UserDetailsService userDetailsService;
-    @Autowired
-    private DataSource dataSource;
     
     /**
      * 密码加密工具

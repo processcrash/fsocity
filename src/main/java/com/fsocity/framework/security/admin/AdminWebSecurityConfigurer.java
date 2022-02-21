@@ -4,6 +4,7 @@ import com.fsocity.framework.security.authentication.JwtAuthenticationTokenFilte
 import com.fsocity.framework.security.authentication.WebAccessDeniedHandler;
 import com.fsocity.framework.security.authentication.WebAuthenticationFailureHandler;
 import com.fsocity.framework.security.authentication.WebAuthenticationSuccessHandler;
+import com.fsocity.framework.security.filter.ValidationCodeFilter;
 import com.fsocity.framework.security.properties.WebSecurityProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
@@ -35,6 +36,8 @@ public class AdminWebSecurityConfigurer extends WebSecurityConfigurerAdapter {
     private PersistentTokenRepository adminPersistentTokenRepository;
     @Autowired
     private UserDetailsService userDetailsService;
+    @Autowired
+    private ValidationCodeFilter adminValidationCodeFilter;
     
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -59,7 +62,7 @@ public class AdminWebSecurityConfigurer extends WebSecurityConfigurerAdapter {
         
         http
                 // 增加验证码验证过滤器
-                // .addFilterBefore(validationCodeFilter, UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(adminValidationCodeFilter, UsernamePasswordAuthenticationFilter.class)
                 
                 // 配置表单登录
                 .formLogin()
