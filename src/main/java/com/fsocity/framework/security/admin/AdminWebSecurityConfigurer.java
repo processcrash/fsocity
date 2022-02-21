@@ -1,4 +1,4 @@
-package com.fsocity.framework.security.config;
+package com.fsocity.framework.security.admin;
 
 import com.fsocity.framework.security.authentication.JwtAuthenticationTokenFilter;
 import com.fsocity.framework.security.authentication.WebAccessDeniedHandler;
@@ -19,7 +19,7 @@ import org.springframework.security.web.authentication.rememberme.PersistentToke
  * Created by macro on 2019/11/5.
  */
 @Configuration
-public class MyWebSecurityConfigurer extends WebSecurityConfigurerAdapter {
+public class AdminWebSecurityConfigurer extends WebSecurityConfigurerAdapter {
     
     @Autowired
     private WebSecurityProperties webSecurityProperties;
@@ -32,7 +32,7 @@ public class MyWebSecurityConfigurer extends WebSecurityConfigurerAdapter {
     @Autowired
     private JwtAuthenticationTokenFilter jwtAuthenticationTokenFilter;
     @Autowired
-    private PersistentTokenRepository persistentTokenRepository;
+    private PersistentTokenRepository adminPersistentTokenRepository;
     @Autowired
     private UserDetailsService userDetailsService;
     
@@ -75,12 +75,14 @@ public class MyWebSecurityConfigurer extends WebSecurityConfigurerAdapter {
                 .logoutUrl(webSecurityProperties.getAdmin().getLogoutUrl())
                 .and()
                 
+                // 设置用户
+                .userDetailsService(userDetailsService)
+                
                 // 配置 记住我
                 .rememberMe()
                 .rememberMeParameter(webSecurityProperties.getAdmin().getRememberMeName())
-                .tokenRepository(persistentTokenRepository)
+                .tokenRepository(adminPersistentTokenRepository)
                 .tokenValiditySeconds(webSecurityProperties.getAdmin().getRememberMeSeconds())
-                .userDetailsService(userDetailsService)
                 .and()
                 
                 // 身份请求认证

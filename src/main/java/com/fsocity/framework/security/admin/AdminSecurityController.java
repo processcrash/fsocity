@@ -1,4 +1,4 @@
-package com.fsocity.framework.security;
+package com.fsocity.framework.security.admin;
 
 import com.fsocity.framework.security.properties.WebSecurityProperties;
 import com.fsocity.framework.security.validation.DefaultValidationCode;

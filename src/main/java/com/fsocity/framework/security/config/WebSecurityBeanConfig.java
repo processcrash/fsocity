@@ -1,6 +1,5 @@
 package com.fsocity.framework.security.config;
 
-import com.fsocity.framework.security.MyJdbcTokenRepositoryImpl;
 import com.fsocity.framework.security.authentication.JwtAuthenticationTokenFilter;
 import com.fsocity.framework.security.properties.WebSecurityProperties;
 import com.fsocity.framework.security.util.JwtTokenUtil;
@@ -13,7 +12,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.DelegatingPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 
 import javax.sql.DataSource;
 import java.util.HashMap;
@@ -45,15 +43,6 @@ public class WebSecurityBeanConfig {
         idToPasswordEncoder.put("BCrypt", bcrypt);
         
         return new DelegatingPasswordEncoder(id, idToPasswordEncoder);
-    }
-    
-    @Bean
-    public PersistentTokenRepository persistentTokenRepository() {
-        MyJdbcTokenRepositoryImpl persistentTokenRepository = new MyJdbcTokenRepositoryImpl();
-        persistentTokenRepository.setDataSource(dataSource); // 设置数据源
-        persistentTokenRepository.setTablePrefix("sys_"); // 设置表前缀
-        persistentTokenRepository.setCreateTableOnStartup(false);
-        return persistentTokenRepository;
     }
     
     @Bean

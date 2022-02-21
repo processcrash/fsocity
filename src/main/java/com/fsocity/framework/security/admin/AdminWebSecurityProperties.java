@@ -1,5 +1,7 @@
-package com.fsocity.framework.security.properties;
+package com.fsocity.framework.security.admin;
 
+import com.fsocity.framework.security.properties.JWTProperties;
+import com.fsocity.framework.security.properties.ValidationCodeProperties;
 import lombok.Data;
 
 /**

@@ -1,4 +1,4 @@
-package com.fsocity.framework.security;
+package com.fsocity.framework.security.rememberme;
 
 import org.springframework.core.log.LogMessage;
 import org.springframework.dao.DataAccessException;

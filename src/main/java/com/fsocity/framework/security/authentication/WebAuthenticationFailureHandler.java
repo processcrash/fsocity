@@ -34,7 +34,7 @@ public class WebAuthenticationFailureHandler implements AuthenticationFailureHan
     @Autowired
     private WebSecurityProperties webSecurityProperties;
     
-    private RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
+    private final RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
     
     @Override
     public void onAuthenticationFailure(HttpServletRequest request,
