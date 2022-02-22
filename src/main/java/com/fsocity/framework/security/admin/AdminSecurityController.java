@@ -86,7 +86,7 @@ public class AdminSecurityController {
         return "thymeleaf/admin/accessDenied";
     }
     
-    @GetMapping("/index")
+    @GetMapping({"", "/index"})
     public String index() {
         return "thymeleaf/admin/index";
     }

@@ -50,8 +50,7 @@ public class AdminWebSecurityConfigurer extends WebSecurityConfigurerAdapter {
     
         // 如果不开启
         if (!webSecurityProperties.getAdmin().isEnable()) {
-            http.httpBasic().disable()
-                    .formLogin().disable();
+            http.httpBasic().disable().formLogin().disable();
             return;
         }
         
@@ -68,24 +67,30 @@ public class AdminWebSecurityConfigurer extends WebSecurityConfigurerAdapter {
                 .formLogin()
                 .loginPage(webSecurityProperties.getAdmin().getRequireAuthenticationUrl()) // 处理登录页面
                 .loginProcessingUrl(webSecurityProperties.getAdmin().getLoginProcessingUrl()) // 处理登录的 url
-                
                 .successHandler(webAuthenticationSuccessHandler) // 配置登录成功处理器
                 .failureHandler(webAuthenticationFailureHandler) // 配置登录失败处理器
                 .and()
-                
+        
+                // session 配置
+                .sessionManagement()
+                .maximumSessions(1)
+                .maxSessionsPreventsLogin(false) // 当达到最大值时，是否保留已经登录的用户
+                // .expiredSessionStrategy() // 当达到最大值时，旧用户被踢出后的操作
+                .and()
+                .and()
+        
                 // 配置退出登录
                 .logout()
                 .logoutUrl(webSecurityProperties.getAdmin().getLogoutUrl())
+                .logoutSuccessUrl(webSecurityProperties.getAdmin().getLoginPage())
                 .and()
-                
-                // 设置用户
-                .userDetailsService(userDetailsService)
                 
                 // 配置 记住我
                 .rememberMe()
                 .rememberMeParameter(webSecurityProperties.getAdmin().getRememberMeName())
                 .tokenRepository(adminPersistentTokenRepository)
                 .tokenValiditySeconds(webSecurityProperties.getAdmin().getRememberMeSeconds())
+                .userDetailsService(userDetailsService)
                 .and()
                 
                 // 身份请求认证
