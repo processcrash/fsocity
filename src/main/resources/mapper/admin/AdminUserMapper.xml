@@ -7,8 +7,8 @@
         <id column="id" property="id" />
         <result column="department_id" property="departmentId" />
         <result column="type" property="type" />
-        <result column="login_name" property="loginName" />
-        <result column="user_name" property="userName" />
+        <result column="username" property="username" />
+        <result column="realname" property="realname" />
         <result column="email" property="email" />
         <result column="phone" property="phone" />
         <result column="sex" property="sex" />
@@ -29,7 +29,7 @@
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, department_id, type, login_name, user_name, email, phone, sex, avatar, password, salt, del_flag, login_ip, login_date, pwd_update_date, remark, status, create_by, create_time, update_by, update_time
+        id, department_id, type, username, realname, email, phone, sex, avatar, password, salt, del_flag, login_ip, login_date, pwd_update_date, remark, status, create_by, create_time, update_by, update_time
     </sql>
 
 </mapper>

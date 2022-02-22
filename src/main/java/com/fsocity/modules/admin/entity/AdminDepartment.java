@@ -18,7 +18,7 @@ import lombok.AllArgsConstructor;
  * </p>
  *
  * @author Zail
- * @since 2022-02-21
+ * @since 2022-02-22
  */
 @Data
 @Builder
@@ -30,15 +30,12 @@ public class AdminDepartment implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @ApiModelProperty("部门id")
+    @ApiModelProperty("部门ID")
     @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
 
-    @ApiModelProperty("父部门id")
+    @ApiModelProperty("父部门ID")
     private Integer parentId;
-
-    @ApiModelProperty("祖级列表")
-    private String ancestors;
 
     @ApiModelProperty("部门名称")
     private String name;

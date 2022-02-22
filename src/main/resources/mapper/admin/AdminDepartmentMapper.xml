@@ -6,7 +6,6 @@
     <resultMap id="BaseResultMap" type="com.fsocity.modules.admin.entity.AdminDepartment">
         <id column="id" property="id" />
         <result column="parent_id" property="parentId" />
-        <result column="ancestors" property="ancestors" />
         <result column="name" property="name" />
         <result column="order_num" property="orderNum" />
         <result column="leader" property="leader" />
@@ -21,7 +20,7 @@
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, parent_id, ancestors, name, order_num, leader, phone, email, status, create_by, create_time, update_by, update_time
+        id, parent_id, name, order_num, leader, phone, email, status, create_by, create_time, update_by, update_time
     </sql>
 
 </mapper>

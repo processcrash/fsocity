@@ -15,10 +15,13 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
  * </p>
  *
  * @author Zail
- * @since 2022-02-21
+ * @since 2022-02-22
  */
 @Service
 public class AdminPersistentLoginsServiceImpl extends ServiceImpl<AdminPersistentLoginsMapper, AdminPersistentLogins> implements AdminPersistentLoginsService {
+    
+    @Autowired
+    private AdminPersistentLoginsMapper adminPersistentLoginsMapper;
     
     @Override
     public Page<AdminPersistentLogins> findAll(AdminPersistentLogins form, Integer pageNum, Integer pageSize) {

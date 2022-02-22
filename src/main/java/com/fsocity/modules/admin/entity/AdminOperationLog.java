@@ -18,7 +18,7 @@ import lombok.AllArgsConstructor;
  * </p>
  *
  * @author Zail
- * @since 2022-02-21
+ * @since 2022-02-22
  */
 @Data
 @Builder
@@ -30,7 +30,7 @@ public class AdminOperationLog implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @ApiModelProperty("日志主键")
+    @ApiModelProperty("日志ID")
     @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
 
