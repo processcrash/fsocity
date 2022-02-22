@@ -71,6 +71,7 @@ spring:
     password: # Redis服务器连接密码（默认为空）
     timeout: 3000ms # 连接超时时间（毫秒）
   thymeleaf:
+    enabled: true
     cache: false # 取消页面cache
 
 mybatis-plus:

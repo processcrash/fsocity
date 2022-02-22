@@ -63,7 +63,6 @@ public class RedisBeanConfig {
         return new RedisCacheManager(redisCacheWriter, redisCacheConfiguration);
     }
     
-    
     @Bean
     public RedisService redisService(){
         return new RedisServiceImpl();

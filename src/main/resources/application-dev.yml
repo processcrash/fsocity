@@ -1,3 +1,5 @@
+debug: true
+
 spring:
   datasource:
     url: jdbc:mysql://localhost:3306/fsocity?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai
@@ -6,4 +8,3 @@ spring:
 
 logging:
   config: classpath:logback-spring-dev.xml # 日志配置文件
-    
