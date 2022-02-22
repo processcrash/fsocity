@@ -81,7 +81,7 @@ public class AdminSecurityController {
         }
         String token = jwtTokenUtil.generateToken(userDetails);
         redisService.set("admin:jwttoken:" + userDetails.getUsername(), token, webSecurityProperties.getAdmin().getRememberMeSeconds());
-    
+        
         AdminLoginResult result = new AdminLoginResult();
         result.setUsername(userDetails.getUsername());
         result.setToken(token);
@@ -135,9 +135,9 @@ public class AdminSecurityController {
      * 使用 @AuthenticationPrincipal 注解, 让 spring 注入 UserDetails 对象,
      * 该对象为登录的用户信息
      */
-    @GetMapping("/currentUser")
+    @GetMapping({"/currentUser", "/api/currentUser"})
     @ResponseBody
-    public JsonResult getCurrentUser(@AuthenticationPrincipal UserDetails userDetails) {
+    public JsonResult currentUser(@AuthenticationPrincipal UserDetails userDetails) {
         return JsonResult.success(userDetails);
     }
     
