@@ -1,0 +1,14 @@
+body {
+  /* 调整整体大小 */
+  font-size: 0.88rem !important;
+}
+
+.btn, input.form-control, select.form-control {
+  height: 2.1875rem;
+  line-height: 1.25rem;
+}
+
+.btn.btn-sm, .btn.btn-xs {
+  height: auto;
+  line-height: 1.25rem;
+}
