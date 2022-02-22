@@ -106,6 +106,7 @@ fsocity:
         - /admin/**
       unauthenticated-urls: # 安全路径白名单
         - /admin/login
+        - /admin/api/login
         - /admin/logout
         - /admin/authenticationRequire
         - /admin/accessDenied

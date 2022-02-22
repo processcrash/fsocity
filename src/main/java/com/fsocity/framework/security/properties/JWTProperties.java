@@ -13,7 +13,7 @@ public class JWTProperties {
     // 头名称
     private String httpHeaderName = "Authorization";
     // 秘钥
-    private String secret = "";
+    private String secret = "ciiz0eiwaTho2Zu4mohheitaeFe5aivoorahtha0eipivesh0rah2hohxie1eima";
     // 过期时间(60 * 60 * 24 * 7)
     private Long expiration = 604800L;
     // token head

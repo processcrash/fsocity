@@ -65,7 +65,7 @@ public class JsonResult {
     }
     
     public static JsonResult err(Integer code, String message) {
-        return JsonResult.of(ResponseStatusEnum.ERR);
+        return JsonResult.of(code, message, null);
     }
     
     public static JsonResult err(Integer code, String message, Object data) {

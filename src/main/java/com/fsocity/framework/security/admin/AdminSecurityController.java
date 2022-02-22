@@ -1,6 +1,8 @@
 package com.fsocity.framework.security.admin;
 
+import com.fsocity.framework.redis.RedisService;
 import com.fsocity.framework.security.properties.WebSecurityProperties;
+import com.fsocity.framework.security.util.JwtTokenUtil;
 import com.fsocity.framework.security.validation.DefaultValidationCode;
 import com.fsocity.framework.security.validation.ImageValidationCode;
 import com.fsocity.framework.security.validation.ImageValidationCodeGenerator;
@@ -13,14 +15,16 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.savedrequest.HttpSessionRequestCache;
 import org.springframework.security.web.savedrequest.RequestCache;
 import org.springframework.security.web.savedrequest.SavedRequest;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
 
 import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
@@ -44,10 +48,45 @@ public class AdminSecurityController {
     private ImageValidationCodeGenerator imageValidationCodeGenerator;
     @Autowired
     private WebSecurityProperties webSecurityProperties;
+    @Autowired
+    private UserDetailsService userDetailsService;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+    @Autowired
+    private JwtTokenUtil jwtTokenUtil;
+    @Autowired
+    private RedisService redisService;
     
     @GetMapping("/login")
     public String login() {
         return "thymeleaf/admin/login";
+    }
+    
+    @PostMapping("/api/login")
+    @ResponseBody
+    public JsonResult apiLogin(@RequestBody @Validated AdminLoginForm form,
+                               BindingResult bindingResult) {
+        UserDetails userDetails = null;
+        try {
+            userDetails = userDetailsService.loadUserByUsername(form.getUsername());
+        }
+        catch (UsernameNotFoundException e) {
+            // e.printStackTrace();
+            return JsonResult.err(1, e.getMessage());
+        }
+        
+        boolean match = passwordEncoder.matches(form.getPassword(), userDetails.getPassword());
+        if (!match) {
+            return JsonResult.err(1, "密码错误！");
+        }
+        String token = jwtTokenUtil.generateToken(userDetails);
+        redisService.set("admin:jwttoken:" + userDetails.getUsername(), token, webSecurityProperties.getAdmin().getRememberMeSeconds());
+    
+        AdminLoginResult result = new AdminLoginResult();
+        result.setUsername(userDetails.getUsername());
+        result.setToken(token);
+        // 保存到redis里
+        return JsonResult.ok(result);
     }
     
     /**
