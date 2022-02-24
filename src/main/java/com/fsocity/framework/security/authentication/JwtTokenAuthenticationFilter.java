@@ -1,7 +1,7 @@
 package com.fsocity.framework.security.authentication;
 
 import com.fsocity.framework.security.properties.JWTProperties;
-import com.fsocity.framework.security.util.JwtTokenUtil;
+import com.fsocity.framework.security.jwt.JwtTokenUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -40,18 +40,18 @@ public class JwtTokenAuthenticationFilter extends OncePerRequestFilter {
     private final JWTProperties jwtProperties;
     
     // jwt工具
-    private final JwtTokenUtil jwtTokenUtil;
+    private final JwtTokenUtils jwtTokenUtils;
     
     private final UserDetailsService userDetailsService;
     
     // 登录失败处理器
     private final AuthenticationFailureHandler authenticationFailureHandler;
     
-    public JwtTokenAuthenticationFilter(String[] authenticatedUrls, String[] unauthenticatedUrls, JWTProperties jwtProperties, JwtTokenUtil jwtTokenUtil, UserDetailsService userDetailsService, AuthenticationFailureHandler authenticationFailureHandler) {
+    public JwtTokenAuthenticationFilter(String[] authenticatedUrls, String[] unauthenticatedUrls, JWTProperties jwtProperties, JwtTokenUtils jwtTokenUtils, UserDetailsService userDetailsService, AuthenticationFailureHandler authenticationFailureHandler) {
         this.authenticatedUrls = authenticatedUrls;
         this.unauthenticatedUrls = unauthenticatedUrls;
         this.jwtProperties = jwtProperties;
-        this.jwtTokenUtil = jwtTokenUtil;
+        this.jwtTokenUtils = jwtTokenUtils;
         this.userDetailsService = userDetailsService;
         this.authenticationFailureHandler = authenticationFailureHandler;
     }
@@ -65,7 +65,7 @@ public class JwtTokenAuthenticationFilter extends OncePerRequestFilter {
             if (authHeader != null && authHeader.startsWith(jwtProperties.getTokenHead())) {
                 // The part after "Bearer "
                 String authToken = authHeader.substring(jwtProperties.getTokenHead().length());
-                String username = jwtTokenUtil.getUserNameFromToken(authToken);
+                String username = jwtTokenUtils.getUserNameFromToken(authToken);
                 LOGGER.info("checking username:{}", username);
                 if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
                     UserDetails userDetails = null;
@@ -78,7 +78,7 @@ public class JwtTokenAuthenticationFilter extends OncePerRequestFilter {
                         authenticationFailureHandler.onAuthenticationFailure(request, response, e);
                         return;
                     }
-                    if (userDetails != null && jwtTokenUtil.validateToken(authToken, userDetails)) {
+                    if (userDetails != null && jwtTokenUtils.validateToken(authToken, userDetails)) {
                         UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
                         authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                         LOGGER.info("authenticated user:{}", username);

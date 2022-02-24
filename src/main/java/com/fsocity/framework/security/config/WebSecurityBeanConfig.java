@@ -1,15 +1,11 @@
 package com.fsocity.framework.security.config;
 
-import com.fsocity.framework.security.authentication.JwtTokenAuthenticationFilter;
-import com.fsocity.framework.security.authentication.WebAuthenticationFailureHandler;
 import com.fsocity.framework.security.properties.WebSecurityProperties;
-import com.fsocity.framework.security.util.JwtTokenUtil;
 import com.fsocity.framework.security.validation.ImageValidationCodeGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.DelegatingPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -26,10 +22,7 @@ public class WebSecurityBeanConfig {
     
     @Autowired
     private WebSecurityProperties webSecurityProperties;
-    @Autowired
-    private UserDetailsService userDetailsService;
-    @Autowired
-    private WebAuthenticationFailureHandler webAuthenticationFailureHandler;
+    
     
     /**
      * 密码加密工具
@@ -45,26 +38,8 @@ public class WebSecurityBeanConfig {
         return new DelegatingPasswordEncoder(id, idToPasswordEncoder);
     }
     
-    @Bean
-    public JwtTokenUtil jwtTokenUtil() {
-        return new JwtTokenUtil(webSecurityProperties.getAdmin().getJwt());
-    }
-    
-    @Bean
-    public JwtTokenAuthenticationFilter adminJwtAuthenticationTokenFilter() {
-        return new JwtTokenAuthenticationFilter(
-                webSecurityProperties.getAdmin().getAuthenticatedUrls(),
-                webSecurityProperties.getAdmin().getUnauthenticatedUrls(),
-                webSecurityProperties.getAdmin().getJwt(),
-                jwtTokenUtil(),
-                userDetailsService,
-                webAuthenticationFailureHandler);
-    }
-    
     /**
      * 图形验证码生成器
-     *
-     * @return
      */
     @Bean
     @ConditionalOnMissingBean(name = "imageValidationCodeGenerator")

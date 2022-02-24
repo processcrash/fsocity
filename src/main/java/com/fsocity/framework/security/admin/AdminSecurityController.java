@@ -2,7 +2,7 @@ package com.fsocity.framework.security.admin;
 
 import com.fsocity.framework.redis.RedisService;
 import com.fsocity.framework.security.properties.WebSecurityProperties;
-import com.fsocity.framework.security.util.JwtTokenUtil;
+import com.fsocity.framework.security.jwt.JwtTokenUtils;
 import com.fsocity.framework.security.validation.DefaultValidationCode;
 import com.fsocity.framework.security.validation.ImageValidationCode;
 import com.fsocity.framework.security.validation.ImageValidationCodeGenerator;
@@ -53,7 +53,7 @@ public class AdminSecurityController {
     @Autowired
     private PasswordEncoder passwordEncoder;
     @Autowired
-    private JwtTokenUtil jwtTokenUtil;
+    private JwtTokenUtils jwtTokenUtils;
     @Autowired
     private RedisService redisService;
     
@@ -79,7 +79,7 @@ public class AdminSecurityController {
         if (!match) {
             return JsonResult.err(1, "密码错误！");
         }
-        String token = jwtTokenUtil.generateToken(userDetails);
+        String token = jwtTokenUtils.generateToken(userDetails);
         redisService.set("admin:jwttoken:" + userDetails.getUsername(), token, webSecurityProperties.getAdmin().getRememberMeSeconds());
         
         AdminLoginResult result = new AdminLoginResult();

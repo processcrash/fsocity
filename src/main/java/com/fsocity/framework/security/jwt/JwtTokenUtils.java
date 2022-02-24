@@ -1,4 +1,4 @@
-package com.fsocity.framework.security.util;
+package com.fsocity.framework.security.jwt;
 
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.StrUtil;
@@ -23,18 +23,17 @@ import java.util.Map;
  * {"sub":"wang","created":1489079981393,"exp":1489684781}
  * signature的生成算法：
  * HMACSHA512(base64UrlEncode(header) + "." +base64UrlEncode(payload),secret)
- * Created by macro on 2018/4/26.
  */
-public class JwtTokenUtil {
+public class JwtTokenUtils {
     
-    private static final Logger LOGGER = LoggerFactory.getLogger(JwtTokenUtil.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(JwtTokenUtils.class);
     
     private static final String CLAIM_KEY_USERNAME = "sub";
     private static final String CLAIM_KEY_CREATED = "created";
     
     private final JWTProperties jwtProperties;
     
-    public JwtTokenUtil(JWTProperties jwtProperties) {
+    public JwtTokenUtils(JWTProperties jwtProperties) {
         this.jwtProperties = jwtProperties;
     }
     
