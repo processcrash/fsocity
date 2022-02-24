@@ -84,7 +84,7 @@ public class AdminSecurityController {
         
         AdminLoginResult result = new AdminLoginResult();
         result.setUsername(userDetails.getUsername());
-        result.setToken(token);
+        result.setJwtToken(token);
         // 保存到redis里
         return JsonResult.ok(result);
     }

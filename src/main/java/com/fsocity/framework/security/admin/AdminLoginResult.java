@@ -12,4 +12,6 @@ public class AdminLoginResult {
     private String username;
     
     private String token;
+    
+    private String jwtToken;
 }

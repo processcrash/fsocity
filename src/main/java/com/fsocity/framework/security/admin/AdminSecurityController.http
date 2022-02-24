@@ -1,0 +1,12 @@
+###
+POST http://localhost:9090/admin/api/login
+Content-Type: application/json
+
+{
+    "username": "admin",
+    "password": "123456"
+}
+
+### 安全验证ok
+GET http://localhost:9090/admin/index
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImNyZWF0ZWQiOjE2NDU2NzQ5NTI0NTcsImV4cCI6MTY0NjI3OTc1Mn0.RlZQWGTwZbN1_qRQP-T9uPMx107DXmRY-4HoylHgkqDy6u178gLvWiG18XIPxoqYWQ4S_CDpTFYzb4G0iVj2Kw
