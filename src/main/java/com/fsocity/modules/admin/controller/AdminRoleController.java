@@ -25,17 +25,17 @@ import java.util.List;
  * </p>
  *
  * @author Zail
- * @since 2022-02-22
+ * @since 2022-02-24
  */
 @RestController
 @RequestMapping("/admin/api/adminRole")
 public class AdminRoleController {
 
-@Autowired
-private AdminRoleService adminRoleService;
+    @Autowired
+    private AdminRoleService adminRoleService;
 
     @ApiOperation("列表")
-    @GetMapping("/list")
+    @GetMapping({"", "/list"})
     public JsonResult list(@RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum,
                            @RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize,
                            AdminRole form) {
@@ -51,7 +51,7 @@ private AdminRoleService adminRoleService;
     }
 
     @ApiOperation("保存")
-    @PostMapping("/save")
+    @PostMapping({"", "/save"})
     public JsonResult save(@RequestBody @Validated AdminRole adminRole,
                            BindingResult bindingResult) {
         List<FieldErrorInfo> errors = ValidationUtils.getErrors(bindingResult);
@@ -64,7 +64,7 @@ private AdminRoleService adminRoleService;
     }
 
     @ApiOperation("删除")
-    @PostMapping("/delete/{id}")
+    @DeleteMapping("/{id}")
     public JsonResult delete(@PathVariable Integer id) {
         boolean flag = adminRoleService.deleteById(id);
         return JsonResult.ok(flag);

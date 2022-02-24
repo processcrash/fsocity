@@ -15,7 +15,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
  * </p>
  *
  * @author Zail
- * @since 2022-02-22
+ * @since 2022-02-24
  */
 @Service
 public class AdminNoticeServiceImpl extends ServiceImpl<AdminNoticeMapper, AdminNotice> implements AdminNoticeService {
@@ -26,10 +26,37 @@ public class AdminNoticeServiceImpl extends ServiceImpl<AdminNoticeMapper, Admin
     @Override
     public Page<AdminNotice> findAll(AdminNotice form, Integer pageNum, Integer pageSize) {
         LambdaQueryWrapper<AdminNotice> queryWrapper = new LambdaQueryWrapper<>();
-        if (form.getId() != null) {
+                if (form.getId() != null) {
             queryWrapper.eq(AdminNotice::getId, form.getId());
         }
-        
+        if (form.getType() != null) {
+            queryWrapper.eq(AdminNotice::getType, form.getType());
+        }
+        if (form.getTitle() != null) {
+            queryWrapper.eq(AdminNotice::getTitle, form.getTitle());
+        }
+        if (form.getContent() != null) {
+            queryWrapper.eq(AdminNotice::getContent, form.getContent());
+        }
+        if (form.getRemark() != null) {
+            queryWrapper.eq(AdminNotice::getRemark, form.getRemark());
+        }
+        if (form.getStatus() != null) {
+            queryWrapper.eq(AdminNotice::getStatus, form.getStatus());
+        }
+        if (form.getCreateBy() != null) {
+            queryWrapper.eq(AdminNotice::getCreateBy, form.getCreateBy());
+        }
+        if (form.getCreateTime() != null) {
+            queryWrapper.eq(AdminNotice::getCreateTime, form.getCreateTime());
+        }
+        if (form.getUpdateBy() != null) {
+            queryWrapper.eq(AdminNotice::getUpdateBy, form.getUpdateBy());
+        }
+        if (form.getUpdateTime() != null) {
+            queryWrapper.eq(AdminNotice::getUpdateTime, form.getUpdateTime());
+        }
+                
         Page<AdminNotice> page = new Page<>(pageNum, pageSize);
         page = adminNoticeMapper.selectPage(page, queryWrapper);
         return page;

@@ -15,7 +15,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
  * </p>
  *
  * @author Zail
- * @since 2022-02-22
+ * @since 2022-02-24
  */
 @Service
 public class AdminDictionaryTypeServiceImpl extends ServiceImpl<AdminDictionaryTypeMapper, AdminDictionaryType> implements AdminDictionaryTypeService {
@@ -26,10 +26,34 @@ public class AdminDictionaryTypeServiceImpl extends ServiceImpl<AdminDictionaryT
     @Override
     public Page<AdminDictionaryType> findAll(AdminDictionaryType form, Integer pageNum, Integer pageSize) {
         LambdaQueryWrapper<AdminDictionaryType> queryWrapper = new LambdaQueryWrapper<>();
-        if (form.getId() != null) {
+                if (form.getId() != null) {
             queryWrapper.eq(AdminDictionaryType::getId, form.getId());
         }
-        
+        if (form.getCode() != null) {
+            queryWrapper.eq(AdminDictionaryType::getCode, form.getCode());
+        }
+        if (form.getName() != null) {
+            queryWrapper.eq(AdminDictionaryType::getName, form.getName());
+        }
+        if (form.getRemark() != null) {
+            queryWrapper.eq(AdminDictionaryType::getRemark, form.getRemark());
+        }
+        if (form.getStatus() != null) {
+            queryWrapper.eq(AdminDictionaryType::getStatus, form.getStatus());
+        }
+        if (form.getCreateBy() != null) {
+            queryWrapper.eq(AdminDictionaryType::getCreateBy, form.getCreateBy());
+        }
+        if (form.getCreateTime() != null) {
+            queryWrapper.eq(AdminDictionaryType::getCreateTime, form.getCreateTime());
+        }
+        if (form.getUpdateBy() != null) {
+            queryWrapper.eq(AdminDictionaryType::getUpdateBy, form.getUpdateBy());
+        }
+        if (form.getUpdateTime() != null) {
+            queryWrapper.eq(AdminDictionaryType::getUpdateTime, form.getUpdateTime());
+        }
+                
         Page<AdminDictionaryType> page = new Page<>(pageNum, pageSize);
         page = adminDictionaryTypeMapper.selectPage(page, queryWrapper);
         return page;

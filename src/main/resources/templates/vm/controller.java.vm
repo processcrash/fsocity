@@ -50,11 +50,11 @@ public class ${table.controllerName} extends ${superControllerClass} {
 public class ${table.controllerName} {
 #end
 
-@Autowired
-private ${table.serviceName} ${table.entityPath}Service;
+    @Autowired
+    private ${table.serviceName} ${table.entityPath}Service;
 
     @ApiOperation("列表")
-    @GetMapping("/list")
+    @GetMapping({"", "/list"})
     public JsonResult list(@RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum,
                            @RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize,
                            ${table.entityName} form) {
@@ -70,7 +70,7 @@ private ${table.serviceName} ${table.entityPath}Service;
     }
 
     @ApiOperation("保存")
-    @PostMapping("/save")
+    @PostMapping({"", "/save"})
     public JsonResult save(@RequestBody @Validated ${table.entityName} ${table.entityPath},
                            BindingResult bindingResult) {
         List<FieldErrorInfo> errors = ValidationUtils.getErrors(bindingResult);
@@ -83,7 +83,7 @@ private ${table.serviceName} ${table.entityPath}Service;
     }
 
     @ApiOperation("删除")
-    @PostMapping("/delete/{id}")
+    @DeleteMapping("/{id}")
     public JsonResult delete(@PathVariable Integer id) {
         boolean flag = ${table.entityPath}Service.deleteById(id);
         return JsonResult.ok(flag);

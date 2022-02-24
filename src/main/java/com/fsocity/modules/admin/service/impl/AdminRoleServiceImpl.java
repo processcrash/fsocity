@@ -15,7 +15,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
  * </p>
  *
  * @author Zail
- * @since 2022-02-22
+ * @since 2022-02-24
  */
 @Service
 public class AdminRoleServiceImpl extends ServiceImpl<AdminRoleMapper, AdminRole> implements AdminRoleService {
@@ -26,10 +26,40 @@ public class AdminRoleServiceImpl extends ServiceImpl<AdminRoleMapper, AdminRole
     @Override
     public Page<AdminRole> findAll(AdminRole form, Integer pageNum, Integer pageSize) {
         LambdaQueryWrapper<AdminRole> queryWrapper = new LambdaQueryWrapper<>();
-        if (form.getId() != null) {
+                if (form.getId() != null) {
             queryWrapper.eq(AdminRole::getId, form.getId());
         }
-        
+        if (form.getKey() != null) {
+            queryWrapper.eq(AdminRole::getKey, form.getKey());
+        }
+        if (form.getName() != null) {
+            queryWrapper.eq(AdminRole::getName, form.getName());
+        }
+        if (form.getSortNum() != null) {
+            queryWrapper.eq(AdminRole::getSortNum, form.getSortNum());
+        }
+        if (form.getDataScope() != null) {
+            queryWrapper.eq(AdminRole::getDataScope, form.getDataScope());
+        }
+        if (form.getRemark() != null) {
+            queryWrapper.eq(AdminRole::getRemark, form.getRemark());
+        }
+        if (form.getStatus() != null) {
+            queryWrapper.eq(AdminRole::getStatus, form.getStatus());
+        }
+        if (form.getCreateBy() != null) {
+            queryWrapper.eq(AdminRole::getCreateBy, form.getCreateBy());
+        }
+        if (form.getCreateTime() != null) {
+            queryWrapper.eq(AdminRole::getCreateTime, form.getCreateTime());
+        }
+        if (form.getUpdateBy() != null) {
+            queryWrapper.eq(AdminRole::getUpdateBy, form.getUpdateBy());
+        }
+        if (form.getUpdateTime() != null) {
+            queryWrapper.eq(AdminRole::getUpdateTime, form.getUpdateTime());
+        }
+                
         Page<AdminRole> page = new Page<>(pageNum, pageSize);
         page = adminRoleMapper.selectPage(page, queryWrapper);
         return page;

@@ -15,7 +15,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
  * </p>
  *
  * @author Zail
- * @since 2022-02-22
+ * @since 2022-02-24
  */
 @Service
 public class AdminJobLogServiceImpl extends ServiceImpl<AdminJobLogMapper, AdminJobLog> implements AdminJobLogService {
@@ -26,10 +26,31 @@ public class AdminJobLogServiceImpl extends ServiceImpl<AdminJobLogMapper, Admin
     @Override
     public Page<AdminJobLog> findAll(AdminJobLog form, Integer pageNum, Integer pageSize) {
         LambdaQueryWrapper<AdminJobLog> queryWrapper = new LambdaQueryWrapper<>();
-        if (form.getId() != null) {
+                if (form.getId() != null) {
             queryWrapper.eq(AdminJobLog::getId, form.getId());
         }
-        
+        if (form.getGroup() != null) {
+            queryWrapper.eq(AdminJobLog::getGroup, form.getGroup());
+        }
+        if (form.getName() != null) {
+            queryWrapper.eq(AdminJobLog::getName, form.getName());
+        }
+        if (form.getInvokeTarget() != null) {
+            queryWrapper.eq(AdminJobLog::getInvokeTarget, form.getInvokeTarget());
+        }
+        if (form.getJobMessage() != null) {
+            queryWrapper.eq(AdminJobLog::getJobMessage, form.getJobMessage());
+        }
+        if (form.getStatus() != null) {
+            queryWrapper.eq(AdminJobLog::getStatus, form.getStatus());
+        }
+        if (form.getExceptionInfo() != null) {
+            queryWrapper.eq(AdminJobLog::getExceptionInfo, form.getExceptionInfo());
+        }
+        if (form.getCreateTime() != null) {
+            queryWrapper.eq(AdminJobLog::getCreateTime, form.getCreateTime());
+        }
+                
         Page<AdminJobLog> page = new Page<>(pageNum, pageSize);
         page = adminJobLogMapper.selectPage(page, queryWrapper);
         return page;

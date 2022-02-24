@@ -15,7 +15,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
  * </p>
  *
  * @author Zail
- * @since 2022-02-22
+ * @since 2022-02-24
  */
 @Service
 public class AdminDictionaryDataServiceImpl extends ServiceImpl<AdminDictionaryDataMapper, AdminDictionaryData> implements AdminDictionaryDataService {
@@ -26,10 +26,43 @@ public class AdminDictionaryDataServiceImpl extends ServiceImpl<AdminDictionaryD
     @Override
     public Page<AdminDictionaryData> findAll(AdminDictionaryData form, Integer pageNum, Integer pageSize) {
         LambdaQueryWrapper<AdminDictionaryData> queryWrapper = new LambdaQueryWrapper<>();
-        if (form.getId() != null) {
+                if (form.getId() != null) {
             queryWrapper.eq(AdminDictionaryData::getId, form.getId());
         }
-        
+        if (form.getCode() != null) {
+            queryWrapper.eq(AdminDictionaryData::getCode, form.getCode());
+        }
+        if (form.getLabel() != null) {
+            queryWrapper.eq(AdminDictionaryData::getLabel, form.getLabel());
+        }
+        if (form.getValue() != null) {
+            queryWrapper.eq(AdminDictionaryData::getValue, form.getValue());
+        }
+        if (form.getSortNum() != null) {
+            queryWrapper.eq(AdminDictionaryData::getSortNum, form.getSortNum());
+        }
+        if (form.getIsDefault() != null) {
+            queryWrapper.eq(AdminDictionaryData::getIsDefault, form.getIsDefault());
+        }
+        if (form.getRemark() != null) {
+            queryWrapper.eq(AdminDictionaryData::getRemark, form.getRemark());
+        }
+        if (form.getStatus() != null) {
+            queryWrapper.eq(AdminDictionaryData::getStatus, form.getStatus());
+        }
+        if (form.getCreateBy() != null) {
+            queryWrapper.eq(AdminDictionaryData::getCreateBy, form.getCreateBy());
+        }
+        if (form.getCreateTime() != null) {
+            queryWrapper.eq(AdminDictionaryData::getCreateTime, form.getCreateTime());
+        }
+        if (form.getUpdateBy() != null) {
+            queryWrapper.eq(AdminDictionaryData::getUpdateBy, form.getUpdateBy());
+        }
+        if (form.getUpdateTime() != null) {
+            queryWrapper.eq(AdminDictionaryData::getUpdateTime, form.getUpdateTime());
+        }
+                
         Page<AdminDictionaryData> page = new Page<>(pageNum, pageSize);
         page = adminDictionaryDataMapper.selectPage(page, queryWrapper);
         return page;

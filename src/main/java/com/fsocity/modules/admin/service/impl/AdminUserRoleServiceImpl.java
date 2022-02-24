@@ -15,7 +15,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
  * </p>
  *
  * @author Zail
- * @since 2022-02-22
+ * @since 2022-02-24
  */
 @Service
 public class AdminUserRoleServiceImpl extends ServiceImpl<AdminUserRoleMapper, AdminUserRole> implements AdminUserRoleService {
@@ -26,10 +26,16 @@ public class AdminUserRoleServiceImpl extends ServiceImpl<AdminUserRoleMapper, A
     @Override
     public Page<AdminUserRole> findAll(AdminUserRole form, Integer pageNum, Integer pageSize) {
         LambdaQueryWrapper<AdminUserRole> queryWrapper = new LambdaQueryWrapper<>();
-        if (form.getId() != null) {
+                if (form.getId() != null) {
             queryWrapper.eq(AdminUserRole::getId, form.getId());
         }
-        
+        if (form.getUserId() != null) {
+            queryWrapper.eq(AdminUserRole::getUserId, form.getUserId());
+        }
+        if (form.getRoleId() != null) {
+            queryWrapper.eq(AdminUserRole::getRoleId, form.getRoleId());
+        }
+                
         Page<AdminUserRole> page = new Page<>(pageNum, pageSize);
         page = adminUserRoleMapper.selectPage(page, queryWrapper);
         return page;

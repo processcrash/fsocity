@@ -15,7 +15,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
  * </p>
  *
  * @author Zail
- * @since 2022-02-22
+ * @since 2022-02-24
  */
 @Service
 public class AdminMenuServiceImpl extends ServiceImpl<AdminMenuMapper, AdminMenu> implements AdminMenuService {
@@ -26,10 +26,58 @@ public class AdminMenuServiceImpl extends ServiceImpl<AdminMenuMapper, AdminMenu
     @Override
     public Page<AdminMenu> findAll(AdminMenu form, Integer pageNum, Integer pageSize) {
         LambdaQueryWrapper<AdminMenu> queryWrapper = new LambdaQueryWrapper<>();
-        if (form.getId() != null) {
+                if (form.getId() != null) {
             queryWrapper.eq(AdminMenu::getId, form.getId());
         }
-        
+        if (form.getParentId() != null) {
+            queryWrapper.eq(AdminMenu::getParentId, form.getParentId());
+        }
+        if (form.getType() != null) {
+            queryWrapper.eq(AdminMenu::getType, form.getType());
+        }
+        if (form.getName() != null) {
+            queryWrapper.eq(AdminMenu::getName, form.getName());
+        }
+        if (form.getOrderNum() != null) {
+            queryWrapper.eq(AdminMenu::getOrderNum, form.getOrderNum());
+        }
+        if (form.getUrl() != null) {
+            queryWrapper.eq(AdminMenu::getUrl, form.getUrl());
+        }
+        if (form.getTarget() != null) {
+            queryWrapper.eq(AdminMenu::getTarget, form.getTarget());
+        }
+        if (form.getVisible() != null) {
+            queryWrapper.eq(AdminMenu::getVisible, form.getVisible());
+        }
+        if (form.getIsRefresh() != null) {
+            queryWrapper.eq(AdminMenu::getIsRefresh, form.getIsRefresh());
+        }
+        if (form.getPerms() != null) {
+            queryWrapper.eq(AdminMenu::getPerms, form.getPerms());
+        }
+        if (form.getIcon() != null) {
+            queryWrapper.eq(AdminMenu::getIcon, form.getIcon());
+        }
+        if (form.getRemark() != null) {
+            queryWrapper.eq(AdminMenu::getRemark, form.getRemark());
+        }
+        if (form.getStatus() != null) {
+            queryWrapper.eq(AdminMenu::getStatus, form.getStatus());
+        }
+        if (form.getCreateBy() != null) {
+            queryWrapper.eq(AdminMenu::getCreateBy, form.getCreateBy());
+        }
+        if (form.getCreateTime() != null) {
+            queryWrapper.eq(AdminMenu::getCreateTime, form.getCreateTime());
+        }
+        if (form.getUpdateBy() != null) {
+            queryWrapper.eq(AdminMenu::getUpdateBy, form.getUpdateBy());
+        }
+        if (form.getUpdateTime() != null) {
+            queryWrapper.eq(AdminMenu::getUpdateTime, form.getUpdateTime());
+        }
+                
         Page<AdminMenu> page = new Page<>(pageNum, pageSize);
         page = adminMenuMapper.selectPage(page, queryWrapper);
         return page;

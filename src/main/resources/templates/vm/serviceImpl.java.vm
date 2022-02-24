@@ -31,9 +31,13 @@ public class ${table.serviceImplName} extends ${superServiceImplClass}<${table.m
     @Override
     public Page<${table.entityName}> findAll(${table.entityName} form, Integer pageNum, Integer pageSize) {
         LambdaQueryWrapper<${table.entityName}> queryWrapper = new LambdaQueryWrapper<>();
-        if (form.getId() != null) {
-            queryWrapper.eq(${table.entityName}::getId, form.getId());
+        ## ----------  BEGIN 字段循环遍历  ----------
+        #foreach($field in ${table.fields})
+        if (form.get${field.capitalName}() != null) {
+            queryWrapper.eq(${table.entityName}::get${field.capitalName}, form.get${field.capitalName}());
         }
+        #end
+        ## ----------  END 字段循环遍历  ----------
         
         Page<${table.entityName}> page = new Page<>(pageNum, pageSize);
         page = ${table.entityPath}Mapper.selectPage(page, queryWrapper);

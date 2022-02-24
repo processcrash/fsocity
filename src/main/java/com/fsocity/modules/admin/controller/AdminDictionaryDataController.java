@@ -25,17 +25,17 @@ import java.util.List;
  * </p>
  *
  * @author Zail
- * @since 2022-02-22
+ * @since 2022-02-24
  */
 @RestController
 @RequestMapping("/admin/api/adminDictionaryData")
 public class AdminDictionaryDataController {
 
-@Autowired
-private AdminDictionaryDataService adminDictionaryDataService;
+    @Autowired
+    private AdminDictionaryDataService adminDictionaryDataService;
 
     @ApiOperation("列表")
-    @GetMapping("/list")
+    @GetMapping({"", "/list"})
     public JsonResult list(@RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum,
                            @RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize,
                            AdminDictionaryData form) {
@@ -51,7 +51,7 @@ private AdminDictionaryDataService adminDictionaryDataService;
     }
 
     @ApiOperation("保存")
-    @PostMapping("/save")
+    @PostMapping({"", "/save"})
     public JsonResult save(@RequestBody @Validated AdminDictionaryData adminDictionaryData,
                            BindingResult bindingResult) {
         List<FieldErrorInfo> errors = ValidationUtils.getErrors(bindingResult);
@@ -64,7 +64,7 @@ private AdminDictionaryDataService adminDictionaryDataService;
     }
 
     @ApiOperation("删除")
-    @PostMapping("/delete/{id}")
+    @DeleteMapping("/{id}")
     public JsonResult delete(@PathVariable Integer id) {
         boolean flag = adminDictionaryDataService.deleteById(id);
         return JsonResult.ok(flag);

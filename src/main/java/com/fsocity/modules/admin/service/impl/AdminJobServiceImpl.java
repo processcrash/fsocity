@@ -15,7 +15,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
  * </p>
  *
  * @author Zail
- * @since 2022-02-22
+ * @since 2022-02-24
  */
 @Service
 public class AdminJobServiceImpl extends ServiceImpl<AdminJobMapper, AdminJob> implements AdminJobService {
@@ -26,10 +26,46 @@ public class AdminJobServiceImpl extends ServiceImpl<AdminJobMapper, AdminJob> i
     @Override
     public Page<AdminJob> findAll(AdminJob form, Integer pageNum, Integer pageSize) {
         LambdaQueryWrapper<AdminJob> queryWrapper = new LambdaQueryWrapper<>();
-        if (form.getId() != null) {
+                if (form.getId() != null) {
             queryWrapper.eq(AdminJob::getId, form.getId());
         }
-        
+        if (form.getGroup() != null) {
+            queryWrapper.eq(AdminJob::getGroup, form.getGroup());
+        }
+        if (form.getName() != null) {
+            queryWrapper.eq(AdminJob::getName, form.getName());
+        }
+        if (form.getInvokeTarget() != null) {
+            queryWrapper.eq(AdminJob::getInvokeTarget, form.getInvokeTarget());
+        }
+        if (form.getCronExpression() != null) {
+            queryWrapper.eq(AdminJob::getCronExpression, form.getCronExpression());
+        }
+        if (form.getMisfirePolicy() != null) {
+            queryWrapper.eq(AdminJob::getMisfirePolicy, form.getMisfirePolicy());
+        }
+        if (form.getConcurrent() != null) {
+            queryWrapper.eq(AdminJob::getConcurrent, form.getConcurrent());
+        }
+        if (form.getRemark() != null) {
+            queryWrapper.eq(AdminJob::getRemark, form.getRemark());
+        }
+        if (form.getStatus() != null) {
+            queryWrapper.eq(AdminJob::getStatus, form.getStatus());
+        }
+        if (form.getCreateBy() != null) {
+            queryWrapper.eq(AdminJob::getCreateBy, form.getCreateBy());
+        }
+        if (form.getCreateTime() != null) {
+            queryWrapper.eq(AdminJob::getCreateTime, form.getCreateTime());
+        }
+        if (form.getUpdateBy() != null) {
+            queryWrapper.eq(AdminJob::getUpdateBy, form.getUpdateBy());
+        }
+        if (form.getUpdateTime() != null) {
+            queryWrapper.eq(AdminJob::getUpdateTime, form.getUpdateTime());
+        }
+                
         Page<AdminJob> page = new Page<>(pageNum, pageSize);
         page = adminJobMapper.selectPage(page, queryWrapper);
         return page;

@@ -1,19 +1,21 @@
 package com.fsocity.modules.admin.controller;
 
 
-import com.baomidou.mybatisplus.core.toolkit.CollectionUtils;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.fsocity.framework.util.ValidationUtils;
-import com.fsocity.framework.web.FieldErrorInfo;
-import com.fsocity.framework.web.JsonResult;
-import com.fsocity.framework.web.ResponseStatusEnum;
-import com.fsocity.modules.admin.entity.AdminUser;
-import com.fsocity.modules.admin.service.AdminUserService;
-import io.swagger.annotations.ApiOperation;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.RequestMapping;
+
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.BindingResult;
+import com.fsocity.modules.admin.service.AdminUserService;
+import io.swagger.annotations.ApiOperation;
+import com.fsocity.modules.admin.entity.AdminUser;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.baomidou.mybatisplus.core.toolkit.CollectionUtils;
+import com.fsocity.framework.web.JsonResult;
+import com.fsocity.framework.web.FieldErrorInfo;
+import com.fsocity.framework.web.ResponseStatusEnum;
+import com.fsocity.framework.util.ValidationUtils;
 
 import java.util.List;
 
@@ -23,34 +25,33 @@ import java.util.List;
  * </p>
  *
  * @author Zail
- * @since 2022-02-22
+ * @since 2022-02-24
  */
 @RestController
 @RequestMapping("/admin/api/adminUser")
 public class AdminUserController {
-    
+
     @Autowired
     private AdminUserService adminUserService;
-    
+
     @ApiOperation("列表")
-    @GetMapping("/list")
+    @GetMapping({"", "/list"})
     public JsonResult list(@RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum,
                            @RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize,
                            AdminUser form) {
-        
         Page<AdminUser> list = adminUserService.findAll(form, pageNum, pageSize);
         return JsonResult.ok(list);
     }
-    
+
     @ApiOperation("详情")
     @GetMapping("/{id}")
     public JsonResult detail(@PathVariable Integer id) {
         AdminUser adminUser = adminUserService.getById(id);
         return JsonResult.ok(adminUser);
     }
-    
+
     @ApiOperation("保存")
-    @PostMapping("/save")
+    @PostMapping({"", "/save"})
     public JsonResult save(@RequestBody @Validated AdminUser adminUser,
                            BindingResult bindingResult) {
         List<FieldErrorInfo> errors = ValidationUtils.getErrors(bindingResult);
@@ -61,13 +62,13 @@ public class AdminUserController {
         boolean flag = adminUserService.save(adminUser);
         return JsonResult.ok(flag);
     }
-    
+
     @ApiOperation("删除")
-    @PostMapping("/delete/{id}")
+    @DeleteMapping("/{id}")
     public JsonResult delete(@PathVariable Integer id) {
         boolean flag = adminUserService.deleteById(id);
         return JsonResult.ok(flag);
     }
-    
+
 }
 
