@@ -13,11 +13,17 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.security.web.util.matcher.OrRequestMatcher;
+import org.springframework.security.web.util.matcher.RequestMatcher;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
  * Admin 后台管理安全配置。
- *
+ * <p>
  * 若先要配置多个安全配置，请查看 https://docs.spring.io/spring-security/reference/servlet/configuration/java.html#_multiple_httpsecurity
  * 实现：1再写一个继承WebSecurityConfigurerAdapter的配置类，并加上@Order排序信息即可配置多个
  * 安全配置类。
@@ -44,13 +50,16 @@ public class AdminWebSecurityConfigurer extends WebSecurityConfigurerAdapter {
     
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+        // 先配置RequestMatcher，这样就不需要过滤其它不必要的链接。
+        http.requestMatcher(getRequestMatcher());
+        
         if (!webSecurityProperties.getCsrf().isEnable()) {
             http.csrf().disable(); // 关闭csrf
         }
         if (!webSecurityProperties.getCors().isEnable()) {
             http.cors().disable(); // 关闭cors
         }
-    
+        
         // 如果不开启
         if (!webSecurityProperties.getAdmin().isEnable()) {
             http.httpBasic().disable().formLogin().disable();
@@ -73,7 +82,7 @@ public class AdminWebSecurityConfigurer extends WebSecurityConfigurerAdapter {
                 .successHandler(webAuthenticationSuccessHandler) // 配置登录成功处理器
                 .failureHandler(webAuthenticationFailureHandler) // 配置登录失败处理器
                 .and()
-        
+                
                 // session 配置
                 .sessionManagement()
                 .maximumSessions(1)
@@ -81,7 +90,7 @@ public class AdminWebSecurityConfigurer extends WebSecurityConfigurerAdapter {
                 // .expiredSessionStrategy() // 当达到最大值时，旧用户被踢出后的操作
                 .and()
                 .and()
-        
+                
                 // 配置退出登录
                 .logout()
                 .logoutUrl(webSecurityProperties.getAdmin().getLogoutUrl())
@@ -118,6 +127,15 @@ public class AdminWebSecurityConfigurer extends WebSecurityConfigurerAdapter {
                 .accessDeniedHandler(webAccessDeniedHandler) // 配置访问拒绝处理器
                 .accessDeniedPage(webSecurityProperties.getAdmin().getAccessDeniedUrl());
         
+    }
+    
+    public RequestMatcher getRequestMatcher() {
+        List<RequestMatcher> matchers = new ArrayList<>();
+        for (String authenticatedUrl : webSecurityProperties.getAdmin().getAuthenticatedUrls()) {
+            AntPathRequestMatcher matcher = new AntPathRequestMatcher(authenticatedUrl);
+            matchers.add(matcher);
+        }
+        return new OrRequestMatcher(matchers);
     }
     
 }
