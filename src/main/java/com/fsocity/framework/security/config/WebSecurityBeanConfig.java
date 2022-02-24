@@ -1,6 +1,7 @@
 package com.fsocity.framework.security.config;
 
-import com.fsocity.framework.security.authentication.JwtAuthenticationTokenFilter;
+import com.fsocity.framework.security.authentication.JwtTokenAuthenticationFilter;
+import com.fsocity.framework.security.authentication.WebAuthenticationFailureHandler;
 import com.fsocity.framework.security.properties.WebSecurityProperties;
 import com.fsocity.framework.security.util.JwtTokenUtil;
 import com.fsocity.framework.security.validation.ImageValidationCodeGenerator;
@@ -27,6 +28,8 @@ public class WebSecurityBeanConfig {
     private WebSecurityProperties webSecurityProperties;
     @Autowired
     private UserDetailsService userDetailsService;
+    @Autowired
+    private WebAuthenticationFailureHandler webAuthenticationFailureHandler;
     
     /**
      * 密码加密工具
@@ -48,11 +51,14 @@ public class WebSecurityBeanConfig {
     }
     
     @Bean
-    public JwtAuthenticationTokenFilter jwtAuthenticationTokenFilter() {
-        return new JwtAuthenticationTokenFilter(
+    public JwtTokenAuthenticationFilter adminJwtAuthenticationTokenFilter() {
+        return new JwtTokenAuthenticationFilter(
+                webSecurityProperties.getAdmin().getAuthenticatedUrls(),
+                webSecurityProperties.getAdmin().getUnauthenticatedUrls(),
                 webSecurityProperties.getAdmin().getJwt(),
                 jwtTokenUtil(),
-                userDetailsService);
+                userDetailsService,
+                webAuthenticationFailureHandler);
     }
     
     /**

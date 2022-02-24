@@ -23,16 +23,13 @@ import java.io.IOException;
 public class ValidationCodeFilter extends OncePerRequestFilter {
     
     // 请求方法
-    private String httpMethod;
-    
+    private final String httpMethod;
     // 处理登录的链接
-    private String loginProcessingUrl;
-    
+    private final String loginProcessingUrl;
     // 验证码保存到 session 中的名称
-    private String sessionKey;
-    
+    private final String sessionKey;
     // 登录失败处理器
-    private AuthenticationFailureHandler authenticationFailureHandler;
+    private final AuthenticationFailureHandler authenticationFailureHandler;
     
     public ValidationCodeFilter(String httpMethod, String loginProcessingUrl, String sessionKey, AuthenticationFailureHandler authenticationFailureHandler) {
         this.httpMethod = httpMethod;

@@ -1,6 +1,6 @@
 package com.fsocity.framework.security.admin;
 
-import com.fsocity.framework.security.authentication.JwtAuthenticationTokenFilter;
+import com.fsocity.framework.security.authentication.JwtTokenAuthenticationFilter;
 import com.fsocity.framework.security.authentication.WebAccessDeniedHandler;
 import com.fsocity.framework.security.authentication.WebAuthenticationFailureHandler;
 import com.fsocity.framework.security.authentication.WebAuthenticationSuccessHandler;
@@ -31,7 +31,7 @@ public class AdminWebSecurityConfigurer extends WebSecurityConfigurerAdapter {
     @Autowired
     private WebAccessDeniedHandler webAccessDeniedHandler;
     @Autowired
-    private JwtAuthenticationTokenFilter jwtAuthenticationTokenFilter;
+    private JwtTokenAuthenticationFilter adminJwtAuthenticationTokenFilter;
     @Autowired
     private PersistentTokenRepository adminPersistentTokenRepository;
     @Autowired
@@ -56,7 +56,7 @@ public class AdminWebSecurityConfigurer extends WebSecurityConfigurerAdapter {
         
         // 是否开启JWT认证
         if (webSecurityProperties.getAdmin().getJwt().isEnable()) {
-            http.addFilterBefore(jwtAuthenticationTokenFilter, UsernamePasswordAuthenticationFilter.class);
+            http.addFilterBefore(adminJwtAuthenticationTokenFilter, UsernamePasswordAuthenticationFilter.class);
         }
         
         http
