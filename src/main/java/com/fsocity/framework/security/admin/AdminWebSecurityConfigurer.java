@@ -16,8 +16,11 @@ import org.springframework.security.web.authentication.rememberme.PersistentToke
 
 
 /**
- * 对SpringSecurity的配置的扩展，支持自定义白名单资源路径和查询用户逻辑
- * Created by macro on 2019/11/5.
+ * Admin 后台管理安全配置。
+ *
+ * 若先要配置多个安全配置，请查看 https://docs.spring.io/spring-security/reference/servlet/configuration/java.html#_multiple_httpsecurity
+ * 实现：1再写一个继承WebSecurityConfigurerAdapter的配置类，并加上@Order排序信息即可配置多个
+ * 安全配置类。
  */
 @Configuration
 public class AdminWebSecurityConfigurer extends WebSecurityConfigurerAdapter {
