@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="zh_CN" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:include="thymeleaf/admin/fragments :: base-head"/>
+</head>
+<body>
+
+<div class="container-fluid pt-2">
+    <div class="row justify-content-center">
+        <div class="col-6">
+            
+            <div class="pt-5"></div>
+            
+            <h2 class="text-danger">出错啦! <th:block th:text="${status}"/></h2>
+            <p>请截图联系管理员.</p>
+            <hr/>
+            <p>timestamp: <th:block th:text="${#dates.format(timestamp)}"/></p>
+            <p>path: <th:block th:text="${path}"/></p>
+            <p>code: <th:block th:text="${code}"/></p>
+            <p>message: <th:block th:text="${message}"/></p>
+        
+        </div>
+    </div>
+</div>
+
+<th:block th:replace="thymeleaf/admin/fragments :: base-js"/>
+<th:block th:include="thymeleaf/admin/fragments :: app-js"/>
+</body>
+</html>
