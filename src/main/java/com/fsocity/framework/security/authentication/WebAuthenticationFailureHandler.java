@@ -3,6 +3,8 @@ package com.fsocity.framework.security.authentication;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fsocity.framework.exception.WebException;
 import com.fsocity.framework.security.properties.WebSecurityProperties;
+import com.fsocity.framework.web.JsonResult;
+import com.fsocity.framework.web.ResponseStatusEnum;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -46,9 +48,13 @@ public class WebAuthenticationFailureHandler implements AuthenticationFailureHan
         // 如果是 application/json 请求, 返回 json 数据
         String accept = request.getHeader("Accept");
         if (accept.contains(MediaType.APPLICATION_JSON_VALUE)) {
-            response.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
+            // 请求失败是写回200还是500？
+            // response.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
+            response.setStatus(HttpStatus.OK.value());
             response.setContentType(MediaType.APPLICATION_JSON_VALUE);
-            response.getWriter().write(objectMapper.writeValueAsString(exception));
+            response.getWriter().write(objectMapper.writeValueAsString(
+                    JsonResult.err(ResponseStatusEnum.UNAUTHORIZED.getCode(), exception.getMessage())
+            ));
             return;
         }
         
