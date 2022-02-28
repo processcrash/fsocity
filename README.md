@@ -1,5 +1,5 @@
 # Fsocity 
-Fsocity是一款Spring Boot急速开发的脚手架。其中集成代码生成、MySQL、Redis、Spring Security、
+Fsocity是一款Spring Boot极速开发的脚手架。其中集成代码生成、MySQL、Redis、Spring Security、
 Admin快速开发等功能。
 
 ## 技术架构
