@@ -1,13 +1,13 @@
 package com.fsocity.modules.admin.service.impl;
 
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.fsocity.modules.admin.entity.AdminDepartment;
 import com.fsocity.modules.admin.mapper.AdminDepartmentMapper;
 import com.fsocity.modules.admin.service.AdminDepartmentService;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
+import org.springframework.beans.factory.annotation.Autowired;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 
 /**
  * <p>
@@ -15,7 +15,7 @@ import org.springframework.stereotype.Service;
  * </p>
  *
  * @author Zail
- * @since 2022-02-24
+ * @since 2022-03-02
  */
 @Service
 public class AdminDepartmentServiceImpl extends ServiceImpl<AdminDepartmentMapper, AdminDepartment> implements AdminDepartmentService {
@@ -26,7 +26,7 @@ public class AdminDepartmentServiceImpl extends ServiceImpl<AdminDepartmentMappe
     @Override
     public Page<AdminDepartment> findAll(AdminDepartment form, Integer pageNum, Integer pageSize) {
         LambdaQueryWrapper<AdminDepartment> queryWrapper = new LambdaQueryWrapper<>();
-        if (form.getId() != null) {
+                if (form.getId() != null) {
             queryWrapper.eq(AdminDepartment::getId, form.getId());
         }
         if (form.getParentId() != null) {
@@ -62,10 +62,9 @@ public class AdminDepartmentServiceImpl extends ServiceImpl<AdminDepartmentMappe
         if (form.getUpdateTime() != null) {
             queryWrapper.eq(AdminDepartment::getUpdateTime, form.getUpdateTime());
         }
-        
+                
         Page<AdminDepartment> page = new Page<>(pageNum, pageSize);
-        page = adminDepartmentMapper.selectPage(page, queryWrapper);
-        return page;
+        return this.page(page, queryWrapper);
     }
     
     @Override
@@ -73,8 +72,7 @@ public class AdminDepartmentServiceImpl extends ServiceImpl<AdminDepartmentMappe
         AdminDepartment adminDepartment = new AdminDepartment();
         adminDepartment.setId(id);
         // adminDepartment.setStatus(DeleteStatusEnum.DELETED.getCode());
-        int num = adminDepartmentMapper.updateById(adminDepartment);
-        return num == 1;
+        return this.updateById(adminDepartment);
     }
-    
+
 }

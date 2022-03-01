@@ -1,5 +1,6 @@
 package com.fsocity.modules.admin.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.fsocity.modules.admin.entity.AdminUser;
 import com.fsocity.modules.admin.mapper.AdminUserMapper;
 import com.fsocity.modules.admin.service.AdminUserService;
@@ -15,7 +16,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
  * </p>
  *
  * @author Zail
- * @since 2022-02-24
+ * @since 2022-03-02
  */
 @Service
 public class AdminUserServiceImpl extends ServiceImpl<AdminUserMapper, AdminUser> implements AdminUserService {
@@ -24,9 +25,17 @@ public class AdminUserServiceImpl extends ServiceImpl<AdminUserMapper, AdminUser
     private AdminUserMapper adminUserMapper;
     
     @Override
+    public AdminUser getByUsername(String username) {
+        QueryWrapper<AdminUser> queryWrapper = new QueryWrapper<>();
+        queryWrapper.lambda()
+                .eq(AdminUser::getUsername, username);
+        return getOne(queryWrapper);
+    }
+    
+    @Override
     public Page<AdminUser> findAll(AdminUser form, Integer pageNum, Integer pageSize) {
         LambdaQueryWrapper<AdminUser> queryWrapper = new LambdaQueryWrapper<>();
-                if (form.getId() != null) {
+        if (form.getId() != null) {
             queryWrapper.eq(AdminUser::getId, form.getId());
         }
         if (form.getDepartmentId() != null) {
@@ -89,10 +98,9 @@ public class AdminUserServiceImpl extends ServiceImpl<AdminUserMapper, AdminUser
         if (form.getUpdateTime() != null) {
             queryWrapper.eq(AdminUser::getUpdateTime, form.getUpdateTime());
         }
-                
+        
         Page<AdminUser> page = new Page<>(pageNum, pageSize);
-        page = adminUserMapper.selectPage(page, queryWrapper);
-        return page;
+        return this.page(page, queryWrapper);
     }
     
     @Override
@@ -100,8 +108,7 @@ public class AdminUserServiceImpl extends ServiceImpl<AdminUserMapper, AdminUser
         AdminUser adminUser = new AdminUser();
         adminUser.setId(id);
         // adminUser.setStatus(DeleteStatusEnum.DELETED.getCode());
-        int num =  adminUserMapper.updateById(adminUser);
-        return num == 1;
+        return this.updateById(adminUser);
     }
-
+    
 }

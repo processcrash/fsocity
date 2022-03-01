@@ -15,7 +15,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
  * </p>
  *
  * @author Zail
- * @since 2022-02-24
+ * @since 2022-03-02
  */
 @Service
 public class AdminOperationLogServiceImpl extends ServiceImpl<AdminOperationLogMapper, AdminOperationLog> implements AdminOperationLogService {
@@ -76,8 +76,7 @@ public class AdminOperationLogServiceImpl extends ServiceImpl<AdminOperationLogM
         }
                 
         Page<AdminOperationLog> page = new Page<>(pageNum, pageSize);
-        page = adminOperationLogMapper.selectPage(page, queryWrapper);
-        return page;
+        return this.page(page, queryWrapper);
     }
     
     @Override
@@ -85,8 +84,7 @@ public class AdminOperationLogServiceImpl extends ServiceImpl<AdminOperationLogM
         AdminOperationLog adminOperationLog = new AdminOperationLog();
         adminOperationLog.setId(id);
         // adminOperationLog.setStatus(DeleteStatusEnum.DELETED.getCode());
-        int num =  adminOperationLogMapper.updateById(adminOperationLog);
-        return num == 1;
+        return this.updateById(adminOperationLog);
     }
 
 }

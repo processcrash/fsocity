@@ -15,7 +15,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
  * </p>
  *
  * @author Zail
- * @since 2022-02-24
+ * @since 2022-03-02
  */
 @Service
 public class AdminJobLogServiceImpl extends ServiceImpl<AdminJobLogMapper, AdminJobLog> implements AdminJobLogService {
@@ -52,8 +52,7 @@ public class AdminJobLogServiceImpl extends ServiceImpl<AdminJobLogMapper, Admin
         }
                 
         Page<AdminJobLog> page = new Page<>(pageNum, pageSize);
-        page = adminJobLogMapper.selectPage(page, queryWrapper);
-        return page;
+        return this.page(page, queryWrapper);
     }
     
     @Override
@@ -61,8 +60,7 @@ public class AdminJobLogServiceImpl extends ServiceImpl<AdminJobLogMapper, Admin
         AdminJobLog adminJobLog = new AdminJobLog();
         adminJobLog.setId(id);
         // adminJobLog.setStatus(DeleteStatusEnum.DELETED.getCode());
-        int num =  adminJobLogMapper.updateById(adminJobLog);
-        return num == 1;
+        return this.updateById(adminJobLog);
     }
 
 }

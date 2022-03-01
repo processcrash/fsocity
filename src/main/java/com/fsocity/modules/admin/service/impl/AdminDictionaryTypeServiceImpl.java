@@ -15,7 +15,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
  * </p>
  *
  * @author Zail
- * @since 2022-02-24
+ * @since 2022-03-02
  */
 @Service
 public class AdminDictionaryTypeServiceImpl extends ServiceImpl<AdminDictionaryTypeMapper, AdminDictionaryType> implements AdminDictionaryTypeService {
@@ -55,8 +55,7 @@ public class AdminDictionaryTypeServiceImpl extends ServiceImpl<AdminDictionaryT
         }
                 
         Page<AdminDictionaryType> page = new Page<>(pageNum, pageSize);
-        page = adminDictionaryTypeMapper.selectPage(page, queryWrapper);
-        return page;
+        return this.page(page, queryWrapper);
     }
     
     @Override
@@ -64,8 +63,7 @@ public class AdminDictionaryTypeServiceImpl extends ServiceImpl<AdminDictionaryT
         AdminDictionaryType adminDictionaryType = new AdminDictionaryType();
         adminDictionaryType.setId(id);
         // adminDictionaryType.setStatus(DeleteStatusEnum.DELETED.getCode());
-        int num =  adminDictionaryTypeMapper.updateById(adminDictionaryType);
-        return num == 1;
+        return this.updateById(adminDictionaryType);
     }
 
 }

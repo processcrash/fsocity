@@ -15,7 +15,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
  * </p>
  *
  * @author Zail
- * @since 2022-02-24
+ * @since 2022-03-02
  */
 @Service
 public class AdminConfigServiceImpl extends ServiceImpl<AdminConfigMapper, AdminConfig> implements AdminConfigService {
@@ -61,8 +61,7 @@ public class AdminConfigServiceImpl extends ServiceImpl<AdminConfigMapper, Admin
         }
                 
         Page<AdminConfig> page = new Page<>(pageNum, pageSize);
-        page = adminConfigMapper.selectPage(page, queryWrapper);
-        return page;
+        return this.page(page, queryWrapper);
     }
     
     @Override
@@ -70,8 +69,7 @@ public class AdminConfigServiceImpl extends ServiceImpl<AdminConfigMapper, Admin
         AdminConfig adminConfig = new AdminConfig();
         adminConfig.setId(id);
         // adminConfig.setStatus(DeleteStatusEnum.DELETED.getCode());
-        int num =  adminConfigMapper.updateById(adminConfig);
-        return num == 1;
+        return this.updateById(adminConfig);
     }
 
 }

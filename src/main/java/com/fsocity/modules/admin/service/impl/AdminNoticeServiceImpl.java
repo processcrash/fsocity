@@ -15,7 +15,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
  * </p>
  *
  * @author Zail
- * @since 2022-02-24
+ * @since 2022-03-02
  */
 @Service
 public class AdminNoticeServiceImpl extends ServiceImpl<AdminNoticeMapper, AdminNotice> implements AdminNoticeService {
@@ -58,8 +58,7 @@ public class AdminNoticeServiceImpl extends ServiceImpl<AdminNoticeMapper, Admin
         }
                 
         Page<AdminNotice> page = new Page<>(pageNum, pageSize);
-        page = adminNoticeMapper.selectPage(page, queryWrapper);
-        return page;
+        return this.page(page, queryWrapper);
     }
     
     @Override
@@ -67,8 +66,7 @@ public class AdminNoticeServiceImpl extends ServiceImpl<AdminNoticeMapper, Admin
         AdminNotice adminNotice = new AdminNotice();
         adminNotice.setId(id);
         // adminNotice.setStatus(DeleteStatusEnum.DELETED.getCode());
-        int num =  adminNoticeMapper.updateById(adminNotice);
-        return num == 1;
+        return this.updateById(adminNotice);
     }
 
 }

@@ -40,8 +40,7 @@ public class ${table.serviceImplName} extends ${superServiceImplClass}<${table.m
         ## ----------  END 字段循环遍历  ----------
         
         Page<${table.entityName}> page = new Page<>(pageNum, pageSize);
-        page = ${table.entityPath}Mapper.selectPage(page, queryWrapper);
-        return page;
+        return this.page(page, queryWrapper);
     }
     
     @Override
@@ -49,8 +48,7 @@ public class ${table.serviceImplName} extends ${superServiceImplClass}<${table.m
         ${table.entityName} ${table.entityPath} = new ${table.entityName}();
         ${table.entityPath}.setId(id);
         // ${table.entityPath}.setStatus(DeleteStatusEnum.DELETED.getCode());
-        int num =  ${table.entityPath}Mapper.updateById(${table.entityPath});
-        return num == 1;
+        return this.updateById(${table.entityPath});
     }
 
 }

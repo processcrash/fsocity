@@ -15,7 +15,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
  * </p>
  *
  * @author Zail
- * @since 2022-02-24
+ * @since 2022-03-02
  */
 @Service
 public class AdminRoleServiceImpl extends ServiceImpl<AdminRoleMapper, AdminRole> implements AdminRoleService {
@@ -61,8 +61,7 @@ public class AdminRoleServiceImpl extends ServiceImpl<AdminRoleMapper, AdminRole
         }
                 
         Page<AdminRole> page = new Page<>(pageNum, pageSize);
-        page = adminRoleMapper.selectPage(page, queryWrapper);
-        return page;
+        return this.page(page, queryWrapper);
     }
     
     @Override
@@ -70,8 +69,7 @@ public class AdminRoleServiceImpl extends ServiceImpl<AdminRoleMapper, AdminRole
         AdminRole adminRole = new AdminRole();
         adminRole.setId(id);
         // adminRole.setStatus(DeleteStatusEnum.DELETED.getCode());
-        int num =  adminRoleMapper.updateById(adminRole);
-        return num == 1;
+        return this.updateById(adminRole);
     }
 
 }

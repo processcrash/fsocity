@@ -15,7 +15,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
  * </p>
  *
  * @author Zail
- * @since 2022-02-24
+ * @since 2022-03-02
  */
 @Service
 public class AdminMenuServiceImpl extends ServiceImpl<AdminMenuMapper, AdminMenu> implements AdminMenuService {
@@ -79,8 +79,7 @@ public class AdminMenuServiceImpl extends ServiceImpl<AdminMenuMapper, AdminMenu
         }
                 
         Page<AdminMenu> page = new Page<>(pageNum, pageSize);
-        page = adminMenuMapper.selectPage(page, queryWrapper);
-        return page;
+        return this.page(page, queryWrapper);
     }
     
     @Override
@@ -88,8 +87,7 @@ public class AdminMenuServiceImpl extends ServiceImpl<AdminMenuMapper, AdminMenu
         AdminMenu adminMenu = new AdminMenu();
         adminMenu.setId(id);
         // adminMenu.setStatus(DeleteStatusEnum.DELETED.getCode());
-        int num =  adminMenuMapper.updateById(adminMenu);
-        return num == 1;
+        return this.updateById(adminMenu);
     }
 
 }

@@ -15,7 +15,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
  * </p>
  *
  * @author Zail
- * @since 2022-02-24
+ * @since 2022-03-02
  */
 @Service
 public class AdminJobServiceImpl extends ServiceImpl<AdminJobMapper, AdminJob> implements AdminJobService {
@@ -67,8 +67,7 @@ public class AdminJobServiceImpl extends ServiceImpl<AdminJobMapper, AdminJob> i
         }
                 
         Page<AdminJob> page = new Page<>(pageNum, pageSize);
-        page = adminJobMapper.selectPage(page, queryWrapper);
-        return page;
+        return this.page(page, queryWrapper);
     }
     
     @Override
@@ -76,8 +75,7 @@ public class AdminJobServiceImpl extends ServiceImpl<AdminJobMapper, AdminJob> i
         AdminJob adminJob = new AdminJob();
         adminJob.setId(id);
         // adminJob.setStatus(DeleteStatusEnum.DELETED.getCode());
-        int num =  adminJobMapper.updateById(adminJob);
-        return num == 1;
+        return this.updateById(adminJob);
     }
 
 }
