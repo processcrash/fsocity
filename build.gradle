@@ -1,0 +1,79 @@
+plugins {
+    id 'org.springframework.boot' version '2.5.10'
+    id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+    id 'java'
+}
+
+allprojects {
+    group = 'com.fsocity'
+    version = '0.0.1-SNAPSHOT'
+    sourceCompatibility = '1.8'
+    
+    repositories {
+        maven {
+            url 'https://maven.aliyun.com/repository/public/'
+        }
+        maven {
+            url 'https://maven.aliyun.com/repository/spring/'
+        }
+        mavenLocal()
+        mavenCentral()
+    }
+}
+
+ext {
+    sourceEncoding = 'UTF-8'
+    outputEncoding = 'UTF-8'
+    javaVersion = '1.8'
+    
+    springBootVersion = '2.5.10'
+    mysqlConnectorVersion = '8.0.16'
+    druidVersion = '1.1.22'
+    hutoolVersion = '4.5.7'
+    springfoxBootStarterVersion = '3.0.0'
+    jjwtVersion = '0.9.0'
+    mybatisPlusVersion = '3.5.1'
+    velocityVersion = '2.2'
+}
+
+dependencies {
+    // SpringBoot通用依赖模块
+    implementation 'org.springframework.boot:spring-boot-starter-aop'
+    // SpringBoot配置处理 optional = true
+    implementation 'org.springframework.boot:spring-boot-configuration-processor'
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    // Thymeleaf 静态模版
+    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+    // SpringBoot 校验框架
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+    // SpringSecurity 安全框架
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+    
+    // Mysql 数据库驱动
+    implementation "mysql:mysql-connector-java:${mysqlConnectorVersion}"
+    // druid 数据库连接池
+    implementation "com.alibaba:druid-spring-boot-starter:${druidVersion}"
+    // Swagger 文档
+    implementation "io.springfox:springfox-boot-starter:${springfoxBootStarterVersion}"
+    // Hutool Java工具包
+    implementation "cn.hutool:hutool-all:${hutoolVersion}"
+    // JWT(Json Web Token)登录支持
+    implementation "io.jsonwebtoken:jjwt:${jjwtVersion}"
+    // optional = true
+    implementation 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+    // MyBatis Plus 依赖
+    implementation "com.baomidou:mybatis-plus-boot-starter:${mybatisPlusVersion}"
+    // MyBatis Plus 代码生成器
+    implementation "com.baomidou:mybatis-plus-generator:${mybatisPlusVersion}"
+    // Velocity 模板引擎
+    implementation "org.apache.velocity:velocity-engine-core:${velocityVersion}"
+    
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}
