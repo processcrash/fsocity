@@ -131,17 +131,6 @@ public class AdminSecurityController {
     }
     
     /**
-     * 当前登录的用户
-     * 使用 @AuthenticationPrincipal 注解, 让 spring 注入 UserDetails 对象,
-     * 该对象为登录的用户信息
-     */
-    @GetMapping({"/currentUser", "/api/currentUser"})
-    @ResponseBody
-    public JsonResult currentUser(@AuthenticationPrincipal UserDetails userDetails) {
-        return JsonResult.success(userDetails);
-    }
-    
-    /**
      * 图形验证码
      */
     @GetMapping("/validationCode/image")
