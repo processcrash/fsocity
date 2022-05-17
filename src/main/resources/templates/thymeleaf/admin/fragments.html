@@ -8,15 +8,15 @@
     <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests"/>
     <title>Fsocity Admin</title>
     <!-- Font Awesome -->
-    <link rel="stylesheet" href="/fsocity-admin/node_modules/admin-lte/plugins/fontawesome-free/css/all.min.css"/>
+    <link rel="stylesheet" href="/admin-lte/plugins/fontawesome-free/css/all.min.css"/>
     <!-- Theme style -->
-    <link rel="stylesheet" href="/fsocity-admin/node_modules/admin-lte/dist/css/adminlte.min.css"/>
+    <link rel="stylesheet" href="/admin-lte/dist/css/adminlte.min.css"/>
     <!-- 我的css-->
-    <link rel="stylesheet" href="/fsocity-admin/style.css"/>
+    <link rel="stylesheet" href="/admin-static/style.css"/>
 </th:block>
 <th:block th:fragment="icheck-bootstrap-css">
     <!-- icheck bootstrap -->
-    <link rel="stylesheet" href="/fsocity-admin/node_modules/admin-lte/plugins/icheck-bootstrap/icheck-bootstrap.min.css"/>
+    <link rel="stylesheet" href="/admin-lte/plugins/icheck-bootstrap/icheck-bootstrap.min.css"/>
 </th:block>
 
 <!-- /.content-wrapper -->
@@ -28,43 +28,43 @@
 
 <th:block th:fragment="base-js">
     <!-- jQuery -->
-    <script src="/fsocity-admin/node_modules/admin-lte/plugins/jquery/jquery.min.js"></script>
+    <script src="/admin-lte/plugins/jquery/jquery.min.js"></script>
     <!-- Bootstrap 4 -->
-    <script src="/fsocity-admin/node_modules/admin-lte/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="/admin-lte/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
     <!-- Bootstrap Switch -->
-    <script src="/fsocity-admin/node_modules/admin-lte/plugins/bootstrap-switch/js/bootstrap-switch.min.js"></script>
+    <script src="/admin-lte/plugins/bootstrap-switch/js/bootstrap-switch.min.js"></script>
     <!-- layer -->
     <script src="//cdn.bootcdn.net/ajax/libs/layer/3.5.1/layer.min.js"></script>
     <!-- axios -->
-    <script src="/fsocity-admin/node_modules/axios/dist/axios.min.js"></script>
+    <script src="/axios/dist/axios.min.js"></script>
 </th:block>
 <th:block th:fragment="app-js">
     <!-- AdminLTE App -->
-    <script src="/fsocity-admin/node_modules/admin-lte/dist/js/adminlte.js"></script>
-    <script src="/fsocity-admin/index.js"></script>
+    <script src="/admin-lte/dist/js/adminlte.js"></script>
+    <script src="/admin-static/index.js"></script>
 </th:block>
 <th:block th:fragment="jQuery-UI-js">
     <!-- jQuery UI 1.11.4 -->
-    <script src="/fsocity-admin/node_modules/admin-lte/plugins/jquery-ui/jquery-ui.min.js"></script>
+    <script src="/admin-lte/plugins/jquery-ui/jquery-ui.min.js"></script>
     <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
     <script> $.widget.bridge('uibutton', $.ui.button) </script>
 </th:block>
 <th:block th:fragment="OverlayScrollbars-js">
     <!-- overlayScrollbars -->
-    <link rel="stylesheet" href="/fsocity-admin/node_modules/admin-lte/plugins/overlayScrollbars/css/OverlayScrollbars.min.css"/>
+    <link rel="stylesheet" href="/admin-lte/plugins/overlayScrollbars/css/OverlayScrollbars.min.css"/>
     <!-- overlayScrollbars -->
-    <script src="/fsocity-admin/node_modules/admin-lte/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
+    <script src="/admin-lte/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
 </th:block>
 <th:block th:fragment="bootstrap-table-js">
-    <link rel="stylesheet" href="/fsocity-admin/node_modules/bootstrap-table/dist/bootstrap-table.min.css"/>
-    <link rel="stylesheet" href="/fsocity-admin/node_modules/bootstrap-table/dist/extensions/page-jump-to/bootstrap-table-page-jump-to.css"/>
-    <link href="/fsocity-admin/node_modules/jquery-resizable-columns-0.2.3/jquery.resizableColumns.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="/bootstrap-table/dist/bootstrap-table.min.css"/>
+    <link rel="stylesheet" href="/bootstrap-table/dist/extensions/page-jump-to/bootstrap-table-page-jump-to.css"/>
+    <link href="/jquery-resizable-columns-0.2.3/jquery.resizableColumns.css" rel="stylesheet"/>
     
-    <script src="/fsocity-admin/node_modules/bootstrap-table/dist/bootstrap-table.min.js"></script>
-    <script src="/fsocity-admin/node_modules/bootstrap-table/dist/locale/bootstrap-table-zh-CN.min.js"></script>
-    <script src="/fsocity-admin/node_modules/bootstrap-table/dist/extensions/page-jump-to/bootstrap-table-page-jump-to.min.js"></script>
-    <script src="/fsocity-admin/node_modules/jquery-resizable-columns-0.2.3/jquery.resizableColumns.min.js"></script>
-    <script src="/fsocity-admin/node_modules/bootstrap-table/dist/extensions/resizable/bootstrap-table-resizable.min.js"></script>
+    <script src="/bootstrap-table/dist/bootstrap-table.min.js"></script>
+    <script src="/bootstrap-table/dist/locale/bootstrap-table-zh-CN.min.js"></script>
+    <script src="/bootstrap-table/dist/extensions/page-jump-to/bootstrap-table-page-jump-to.min.js"></script>
+    <script src="/jquery-resizable-columns-0.2.3/jquery.resizableColumns.min.js"></script>
+    <script src="/bootstrap-table/dist/extensions/resizable/bootstrap-table-resizable.min.js"></script>
     <script>/*<![CDATA[*/
     // bootstrap-table 的默认设置
     $.extend($.fn.bootstrapTable.defaults, {
@@ -138,19 +138,19 @@
     /*]]>*/</script>
 </th:block>
 <th:block th:fragment="moment-js">
-    <script src="/fsocity-admin/node_modules/admin-lte/plugins/moment/moment-with-locales.js"></script>
+    <script src="/admin-lte/plugins/moment/moment-with-locales.js"></script>
     <script> moment.locale('zh-cn') </script>
 </th:block>
 <th:block th:fragment="bt-extensions-treegrid-js">
-    <link href="/fsocity-admin/node_modules/jquery-treegrid-0.2.0/css/jquery.treegrid.min.css" rel="stylesheet"/>
-    <script src="/fsocity-admin/node_modules/jquery-treegrid-0.2.0/js/jquery.treegrid.min.js"></script>
-    <script src="/fsocity-admin/node_modules/bootstrap-table/dist/extensions/treegrid/bootstrap-table-treegrid.min.js"></script>
+    <link href="/jquery-treegrid-0.2.0/css/jquery.treegrid.min.css" rel="stylesheet"/>
+    <script src="/jquery-treegrid-0.2.0/js/jquery.treegrid.min.js"></script>
+    <script src="/bootstrap-table/dist/extensions/treegrid/bootstrap-table-treegrid.min.js"></script>
 </th:block>
 <th:block th:fragment="jquery-validation-js">
     <!-- jquery-validation -->
-    <script src="/fsocity-admin/node_modules/admin-lte/plugins/jquery-validation/jquery.validate.min.js"></script>
-    <script src="/fsocity-admin/node_modules/admin-lte/plugins/jquery-validation/localization/messages_zh.min.js"></script>
-    <script src="/fsocity-admin/node_modules/admin-lte/plugins/jquery-validation/additional-methods.min.js"></script>
+    <script src="/admin-lte/plugins/jquery-validation/jquery.validate.min.js"></script>
+    <script src="/admin-lte/plugins/jquery-validation/localization/messages_zh.min.js"></script>
+    <script src="/admin-lte/plugins/jquery-validation/additional-methods.min.js"></script>
     <script>/*<![CDATA[*/
     
     /**
@@ -196,28 +196,28 @@
     /*]]>*/</script>
 </th:block>
 <th:block th:fragment="echars-js">
-    <script src="/fsocity-admin/node_modules/echarts-5.2.0/echarts.min.js"></script>
+    <script src="/echarts-5.2.0/echarts.min.js"></script>
 </th:block>
 <th:block th:fragment="select2-js">
-    <link rel="stylesheet" href="/fsocity-admin/node_modules/admin-lte/plugins/select2/css/select2.min.css"/>
-    <link rel="stylesheet" href="/fsocity-admin/node_modules/admin-lte/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css"/>
-    <script src="/fsocity-admin/node_modules/admin-lte/plugins/select2/js/select2.full.min.js"></script>
+    <link rel="stylesheet" href="/admin-lte/plugins/select2/css/select2.min.css"/>
+    <link rel="stylesheet" href="/admin-lte/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css"/>
+    <script src="/admin-lte/plugins/select2/js/select2.full.min.js"></script>
 </th:block>
 <th:block th:fragment="zTree-js">
-    <link rel="stylesheet" href="/fsocity-admin/node_modules/zTree-3.5.46/css/zTreeStyle/zTreeStyle.css"/>
-    <script src="/fsocity-admin/node_modules/zTree-3.5.46/js/jquery.ztree.all.min.js"></script>
+    <link rel="stylesheet" href="/zTree-3.5.46/css/zTreeStyle/zTreeStyle.css"/>
+    <script src="/zTree-3.5.46/js/jquery.ztree.all.min.js"></script>
 </th:block>
 <th:block th:fragment="vue-js">
-    <script src="/fsocity-admin/node_modules/vue-2.6.14/vue.min.js"></script>
+    <script src="/vue-2.6.14/vue.min.js"></script>
 </th:block>
 <th:block th:fragment="bootstrap-datepicker-js">
-    <link rel="stylesheet" href="/fsocity-admin/node_modules/bootstrap-datepicker-1.9.0/css/bootstrap-datepicker.standalone.min.css"/>
-    <script src="/fsocity-admin/node_modules/bootstrap-datepicker-1.9.0/js/bootstrap-datepicker.min.js"></script>
-    <script src="/fsocity-admin/node_modules/bootstrap-datepicker-1.9.0/locales/bootstrap-datepicker.zh-CN.min.js"></script>
+    <link rel="stylesheet" href="/bootstrap-datepicker-1.9.0/css/bootstrap-datepicker.standalone.min.css"/>
+    <script src="/bootstrap-datepicker-1.9.0/js/bootstrap-datepicker.min.js"></script>
+    <script src="/bootstrap-datepicker-1.9.0/locales/bootstrap-datepicker.zh-CN.min.js"></script>
 </th:block>
 <th:block th:fragment="daterangepicker-js">
-    <link rel="stylesheet" href="/fsocity-admin/node_modules/admin-lte/plugins/daterangepicker/daterangepicker.css"/>
-    <script src="/fsocity-admin/node_modules/admin-lte/plugins/daterangepicker/daterangepicker.js"></script>
+    <link rel="stylesheet" href="/admin-lte/plugins/daterangepicker/daterangepicker.css"/>
+    <script src="/admin-lte/plugins/daterangepicker/daterangepicker.js"></script>
     <script>
         $.fn.daterangepicker.defaultOptions = Object.assign({}, $.fn.daterangepicker.defaultOptions, {
             locale: {
