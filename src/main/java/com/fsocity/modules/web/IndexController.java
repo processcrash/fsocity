@@ -15,7 +15,7 @@ public class IndexController {
      */
     @GetMapping({"", "/index"})
     public String index() {
-        return "thymeleaf/index";
+        return "thymeleaf/web/index";
     }
     
 }
