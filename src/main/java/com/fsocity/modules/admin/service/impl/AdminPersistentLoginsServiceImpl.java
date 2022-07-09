@@ -15,7 +15,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
  * </p>
  *
  * @author Zail
- * @since 2022-03-02
+ * @since 2022-07-07
  */
 @Service
 public class AdminPersistentLoginsServiceImpl extends ServiceImpl<AdminPersistentLoginsMapper, AdminPersistentLogins> implements AdminPersistentLoginsService {
@@ -25,12 +25,30 @@ public class AdminPersistentLoginsServiceImpl extends ServiceImpl<AdminPersisten
     
     @Override
     public Page<AdminPersistentLogins> findAll(AdminPersistentLogins form, Integer pageNum, Integer pageSize) {
-        return null;
+        LambdaQueryWrapper<AdminPersistentLogins> queryWrapper = new LambdaQueryWrapper<>();
+                if (form.getSeries() != null) {
+            queryWrapper.eq(AdminPersistentLogins::getSeries, form.getSeries());
+        }
+        if (form.getUsername() != null) {
+            queryWrapper.eq(AdminPersistentLogins::getUsername, form.getUsername());
+        }
+        if (form.getToken() != null) {
+            queryWrapper.eq(AdminPersistentLogins::getToken, form.getToken());
+        }
+        if (form.getLastUsed() != null) {
+            queryWrapper.eq(AdminPersistentLogins::getLastUsed, form.getLastUsed());
+        }
+                
+        Page<AdminPersistentLogins> page = new Page<>(pageNum, pageSize);
+        return this.page(page, queryWrapper);
     }
     
     @Override
     public boolean deleteById(Integer id) {
-        return false;
+        AdminPersistentLogins adminPersistentLogins = new AdminPersistentLogins();
+        adminPersistentLogins.setId(id);
+        // adminPersistentLogins.setStatus(DeleteStatusEnum.DELETED.getCode());
+        return this.updateById(adminPersistentLogins);
     }
 
 }

@@ -10,7 +10,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
  * </p>
  *
  * @author Zail
- * @since 2022-03-02
+ * @since 2022-07-07
  */
 public interface AdminConfigService extends IService<AdminConfig> {
     

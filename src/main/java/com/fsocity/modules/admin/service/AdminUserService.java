@@ -10,11 +10,9 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
  * </p>
  *
  * @author Zail
- * @since 2022-03-02
+ * @since 2022-07-07
  */
 public interface AdminUserService extends IService<AdminUser> {
-    
-    AdminUser getByUsername(String username);
     
     /**
      * 分页查找
@@ -25,6 +23,4 @@ public interface AdminUserService extends IService<AdminUser> {
      * 根据ID删除
      */
     boolean deleteById(Integer id);
-    
-    
 }

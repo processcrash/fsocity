@@ -8,7 +8,7 @@ allprojects {
     group = 'com.fsocity'
     version = '0.0.1-SNAPSHOT'
     sourceCompatibility = '1.8'
-    
+
     repositories {
         maven {
             url 'https://maven.aliyun.com/repository/public/'
@@ -25,7 +25,7 @@ ext {
     sourceEncoding = 'UTF-8'
     outputEncoding = 'UTF-8'
     javaVersion = '1.8'
-    
+
     springBootVersion = '2.5.10'
     mysqlConnectorVersion = '8.0.16'
     druidVersion = '1.1.22'
@@ -34,6 +34,8 @@ ext {
     jjwtVersion = '0.9.0'
     mybatisPlusVersion = '3.5.1'
     velocityVersion = '2.2'
+
+    weixinJavaVersion = '4.3.0'
 }
 
 dependencies {
@@ -50,7 +52,7 @@ dependencies {
     // SpringSecurity 安全框架
     implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation 'org.springframework.boot:spring-boot-starter-data-redis'
-    
+
     // Mysql 数据库驱动
     implementation "mysql:mysql-connector-java:${mysqlConnectorVersion}"
     // druid 数据库连接池
@@ -70,7 +72,20 @@ dependencies {
     implementation "com.baomidou:mybatis-plus-generator:${mybatisPlusVersion}"
     // Velocity 模板引擎
     implementation "org.apache.velocity:velocity-engine-core:${velocityVersion}"
-    
+
+    // Java 微信开发包
+    // 微信小程序
+    implementation "com.github.binarywang:weixin-java-miniapp:${weixinJavaVersion}"
+    // 微信支付
+    implementation "com.github.binarywang:weixin-java-pay:${weixinJavaVersion}"
+    // 微信开放平台
+    implementation "com.github.binarywang:weixin-java-open:${weixinJavaVersion}"
+    // 公众号（包括订阅号和服务号）
+    implementation "com.github.binarywang:weixin-java-mp:${weixinJavaVersion}"
+    // 企业号/企业微信
+    implementation "com.github.binarywang:weixin-java-cp:${weixinJavaVersion}"
+
+    // 测试
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 

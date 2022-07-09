@@ -15,7 +15,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
  * </p>
  *
  * @author Zail
- * @since 2022-03-02
+ * @since 2022-07-07
  */
 @Service
 public class AdminRoleMenuServiceImpl extends ServiceImpl<AdminRoleMenuMapper, AdminRoleMenu> implements AdminRoleMenuService {
