@@ -1,6 +1,9 @@
 package com.fsocity.modules.admin.controller;
 
 
+import com.fsocity.modules.admin.bo.AdminConfigBO;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.validation.annotation.Validated;
@@ -36,10 +39,8 @@ public class AdminConfigController {
 
     @ApiOperation("列表")
     @GetMapping({"", "/list"})
-    public JsonResult list(@RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum,
-                           @RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize,
-                           AdminConfig form) {
-        Page<AdminConfig> list = adminConfigService.findAll(form, pageNum, pageSize);
+    public JsonResult list(PageRequest page, AdminConfigBO bo) {
+        Page<AdminConfig> list = adminConfigService.findAll(page, bo);
         return JsonResult.ok(list);
     }
 

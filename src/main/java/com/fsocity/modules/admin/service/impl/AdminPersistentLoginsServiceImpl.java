@@ -38,7 +38,7 @@ public class AdminPersistentLoginsServiceImpl extends ServiceImpl<AdminPersisten
         if (form.getLastUsed() != null) {
             queryWrapper.eq(AdminPersistentLogins::getLastUsed, form.getLastUsed());
         }
-                
+        
         Page<AdminPersistentLogins> page = new Page<>(pageNum, pageSize);
         return this.page(page, queryWrapper);
     }
@@ -46,7 +46,7 @@ public class AdminPersistentLoginsServiceImpl extends ServiceImpl<AdminPersisten
     @Override
     public boolean deleteById(Integer id) {
         AdminPersistentLogins adminPersistentLogins = new AdminPersistentLogins();
-        adminPersistentLogins.setId(id);
+        // adminPersistentLogins.setId(id);
         // adminPersistentLogins.setStatus(DeleteStatusEnum.DELETED.getCode());
         return this.updateById(adminPersistentLogins);
     }
